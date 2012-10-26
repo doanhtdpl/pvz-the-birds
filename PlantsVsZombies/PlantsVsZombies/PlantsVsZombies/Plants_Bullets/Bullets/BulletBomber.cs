@@ -15,22 +15,27 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class BulletBomber : Bullet
     {
         // Fields
-        Animation animation;
+        protected Animation animation;
 
-        public BulletBomber(Game game)
-            : base(game)
+        public BulletBomber(Game game, Vector2 position)
+            : base(game, position)
         {
-
         }
 
         public override void Initialize()
         {
+            this.animation.Position = position;
             base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            animation.Update(gameTime);
+            if (animation.CurrentFrame == animation.Frames.Count - 1)
+            {
+                this.isCollided = true;
+            }
+            else 
+                animation.Update(gameTime);
             base.Update(gameTime);
         }
 

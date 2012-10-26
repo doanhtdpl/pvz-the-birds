@@ -19,17 +19,59 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     {
         #region Fields
 
+        // Name of Sprite or Animation
+        protected string BName;
+
+        // Name of Sprite effect
+        protected string B_Effect;
+
         // Effect when collision happen
         protected Effect effect;
 
         // True if collision happen
         protected bool isCollided;
 
+        // Damage of bullet
+        protected int damage;
+
+        // Position of bullet
+        protected Vector2 position;
+
         #endregion
 
-        public Bullet(Game game)
+        #region Properties
+
+        public bool IsCollided
+        {
+            get { return this.isCollided; }
+        }
+
+        public int Damage
+        {
+            get { return this.damage; }
+        }
+
+        public Vector2 Position
+        {
+            get;
+            set;
+        }
+
+        public Vector2 GridPosition
+        {
+            get { return Vector2.Zero; }
+        }
+
+        public bool PositionChanged { get; set; }
+
+        public Griding.Cell Cell { get; set; }
+
+        #endregion
+
+        public Bullet(Game game, Vector2 position)
             : base(game)
         {
+            this.position = position;
             this.Initialize();
         }
 
@@ -63,12 +105,5 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         {
         }
 
-        // Properties
-        public Vector2 GridPosition
-        {
-            get { return Vector2.Zero; }
-        }
-        public bool PositionChanged  { get; set; }
-        public Griding.Cell Cell { get; set; }
     }
 }

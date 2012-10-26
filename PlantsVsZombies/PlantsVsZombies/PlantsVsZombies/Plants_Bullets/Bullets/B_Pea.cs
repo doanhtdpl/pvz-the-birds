@@ -15,64 +15,37 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class B_Pea : BulletShooter
     {
         // Fields
-        protected string BName = @"Images\\BPea";
-        protected string BEffect = @"Images\\BPeaEffect";
-
-        public B_Pea(Game game)
-            : base(game)
+        public B_Pea(Game game, Vector2 position)
+            : base(game, position)
         {
         }
 
         public override void Initialize()
         {
+            this.BName = @"Images\\Plants\\B_Pea";
+            this.B_Effect = @"Images\\Plants\\B_PeaEffect";
             this.BSprite = SpriteBank.GetSprite(this.BName);
+            this.damage = 100;
             base.Initialize();
         }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
-        }
     }
 
-    public class B_PeaEngine
+    public class B_PeaEngine : BulletEngine
     {
         // Fields
         protected BulletManager bulletManager;
 
         // Methods
-        public B_PeaEngine()
+        public B_PeaEngine(Game game, BulletManager bulletManager)
+            : base(game, bulletManager)
         {
         }
 
-        // Add new Pea bullet to bulletManager
-        public bool AddB_Pea(B_Pea bPea)
+        // Add Pea Bullet
+        public override void AddBullet(Vector2 position)
         {
-            bulletManager.AddBullet(bPea);
-            return true;
-        }
-    }
-
-    public class B_DPeaEngine
-    {
-        // Fields
-        protected BulletManager bulletManager;
-
-        // Methods
-        public B_DPeaEngine()
-        {
-        }
-
-        // Add new Pea bullet to bulletManager
-        public bool AddB_Pea(B_Pea bPea)
-        {
-            bulletManager.AddBullet(bPea);
-            return true;
+            B_Pea b_pea = new B_Pea(this.Game, position);
+            this.Add(b_pea);
         }
     }
 }
