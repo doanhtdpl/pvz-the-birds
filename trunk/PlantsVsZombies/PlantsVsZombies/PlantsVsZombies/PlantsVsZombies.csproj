@@ -83,18 +83,15 @@
     <Compile Include="Griding\Griding.cs" />
     <Compile Include="Griding\IGridable.cs" />
     <Compile Include="HieuPvZ.cs" />
-<<<<<<< .mine
     <Compile Include="Zombies\Impacts\Cold.cs" />
     <Compile Include="Zombies\Impacts\Damaging.cs" />
     <Compile Include="Zombies\Impacts\Impact.cs" />
-=======
     <Compile Include="Plants_Bullets\Bullets\Bullet.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletBomber.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletManager.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletShooter.cs" />
     <Compile Include="Plants_Bullets\Bullets\B_DPea.cs" />
     <Compile Include="Plants_Bullets\Bullets\B_Pea.cs" />
->>>>>>> .r8
     <Compile Include="Zombies\Skeletons\BarrowWight.cs" />
     <Compile Include="Zombies\Skeletons\Skeleton.cs" />
     <Compile Include="Zombies\States\Attack.cs" />
