@@ -102,8 +102,9 @@ namespace PlantsVsZombies.Zombies.Impacts
             if (walk != null)
             {
                 double vel = walk.Velocity * (this.Game.TargetElapsedTime.TotalMilliseconds + this.appliedAffect);
-                vel /= (this.Game.TargetElapsedTime.TotalMilliseconds + (long) ((1f / (nCold + 1)) * ColdAffect));
+                vel /= (this.Game.TargetElapsedTime.TotalMilliseconds + (long)((1f / (nCold + 1)) * ColdAffect));
                 walk.Velocity = (int)vel;
+            }
         }
 
         public virtual void ChangeState(States.ZombieState currentState, States.ZombieState lastState)
