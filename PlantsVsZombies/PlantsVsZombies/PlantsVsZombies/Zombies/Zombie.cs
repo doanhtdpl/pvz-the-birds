@@ -33,10 +33,23 @@ namespace PlantsVsZombies.Zombies
             }
             set
             {
-                this.CurrentZombieState.Image.Reset();
-                this.currentState = value;
+                if (value != currentState)
+                {
+                    States.ZombieState lastState = this.CurrentZombieState;
+                    Vector2 lastPos = this.Position;
+                    lastState.End();
+                    this.currentState = value;
+                    this.CurrentZombieState.Start();
+                    this.Position = lastPos;
+
+                    foreach (Impacts.IZombieImpact impact in this.Impacts)
+                    {
+                        impact.ChangeState(lastState, this.CurrentZombieState);
+                    }
+                }
             }
         }
+
         public States.ZombieState CurrentZombieState
         {
             get
@@ -59,13 +72,26 @@ namespace PlantsVsZombies.Zombies
         public States.Walk Walk { get; set; }
         public States.Death Death { get; set; }
 
+        public Vector2 Position
+        {
+            get
+            {
+                return (CurrentZombieState.Image.Position + CurrentZombieState.Align);
+            }
+            set
+            {
+                CurrentZombieState.Image.Position = value - CurrentZombieState.Align;
+            }
+        }
+
         public int LP { get; set; }
-        public bool IsDie { get { return this.LP <= 0; } }
+        public bool NeedRemove { get { return ((this.Cell == null) || ((this.currentState == ZombieState.Death) && (this.Death.IsComplete))); } }
+        public List<Impacts.IZombieImpact> Impacts { get; set; }
         #endregion
 
         #region IGridable
-        public Vector2 GridPosition { get { return new Vector2(this.CurrentZombieState.Image.Bound.Left, this.CurrentZombieState.Image.Bound.Bottom); } }
-        public bool PositionChanged { get; set; }
+        public Vector2 GridPosition { get { return this.Position; } }
+        public bool PositionChanged { get { return (this.CurrentState == ZombieState.Walk); } }
         public Griding.Cell Cell { get; set; }
         #endregion
 
@@ -73,8 +99,9 @@ namespace PlantsVsZombies.Zombies
         public Zombie(Game game)
             : base(game)
         {
+            this.Impacts = new List<Impacts.IZombieImpact>();
             this.currentState = ZombieState.Walk;
-            this.PositionChanged = false;
+            this.LP = 100;
         }
 
         public Zombie(Zombie zombie)
@@ -85,12 +112,20 @@ namespace PlantsVsZombies.Zombies
             this.Walk = new States.Walk(zombie.Walk);
             this.Attack = new States.Attack(zombie.Attack);
             this.Death = new States.Death(zombie.Death);
-            this.PositionChanged = false;
+            this.LP = zombie.LP;
+            this.Impacts = new List<Impacts.IZombieImpact>();
         }
 
         public override void Draw(GameTime gameTime)
         {
             this.CurrentZombieState.Draw(gameTime);
+
+            SpriteBatch sprBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
+            SpriteFont font = (SpriteFont)this.Game.Services.GetService(typeof(SpriteFont));
+
+            sprBatch.Begin();
+            sprBatch.DrawString(font, String.Concat(this.Cell.Index.X, ", ", this.Cell.Index.Y), this.Position, Color.White);
+            sprBatch.End();
 
             base.Draw(gameTime);
         }
@@ -99,7 +134,27 @@ namespace PlantsVsZombies.Zombies
         {
             this.CurrentZombieState.Update(gameTime);
 
-            base.Draw(gameTime);
+            for (int i = 0; i < this.Impacts.Count;)
+            {
+                if (this.Impacts[i].IsCompleted)
+                {
+                    this.Impacts[i].Remove(this.CurrentZombieState);
+                    this.Impacts.RemoveAt(i);
+                }
+                else
+                {
+                    this.Impacts[i].Update(gameTime);
+                    ++i;
+                }
+            }
+
+            base.Update(gameTime);
+        }
+
+        public virtual void AddImpact(Impacts.IZombieImpact impact)
+        {
+            this.Impacts.Add(impact);
+            impact.Apply(this.CurrentZombieState);
         }
         #endregion
     }

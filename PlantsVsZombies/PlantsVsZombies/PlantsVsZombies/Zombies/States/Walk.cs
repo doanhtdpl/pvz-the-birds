@@ -16,12 +16,18 @@ namespace PlantsVsZombies.Zombies.States
     public class Walk : ZombieState
     {
         #region Properties
-        float Velocity { get; set; }
+        public float Velocity { get; set; }
         #endregion
 
         #region Constructors
-        public Walk(Animation image, float velocity)
-            : base(image)
+        public Walk(Zombie zombie)
+            : base(zombie)
+        {
+            this.Velocity = 0f;
+        }
+
+        public Walk(Zombie zombie, Animation image, float velocity)
+            : base(zombie, image)
         {
             this.Velocity = velocity;
         }
@@ -36,11 +42,29 @@ namespace PlantsVsZombies.Zombies.States
         #region Methods
         public override void Update(GameTime gameTime)
         {
-            Vector2 position = this.Position;
+            Vector2 position = this.Zombie.Position;
             position.X -= Velocity;
-            this.Position = position;
+            this.Zombie.Position = position;
 
             base.Update(gameTime);
+        }
+
+        public override void CheckingState()
+        {
+            if (Zombie.LP <= 0)
+            {
+                this.Zombie.CurrentState = Zombie.ZombieState.Death;
+                return;
+            }
+
+            foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
+            {
+                Zombie zombie = grc as Zombie;
+                if ((zombie != null) && (zombie != this.Zombie) && (zombie.CurrentState != Zombie.ZombieState.Death))
+                {
+                    this.Zombie.CurrentState = Zombie.ZombieState.Attack;
+                }
+            }
         }
         #endregion
     }

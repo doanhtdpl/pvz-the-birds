@@ -1,5 +1,3 @@
-//#define Hieu
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,108 +11,6 @@ using Microsoft.Xna.Framework.Media;
 using GameBaseXNA;
 using System.IO;
 
-#if Hieu
-
-namespace PlantsVsZombies
-{
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
-    public class PvZ : Microsoft.Xna.Framework.Game
-    {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
-        public PvZ()
-        {
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
-
-            this.TargetElapsedTime = TimeSpan.FromTicks(333333);
-            this.IsMouseVisible = true;
-
-            this.graphics.PreferredBackBufferWidth = 800;
-            this.graphics.PreferredBackBufferHeight = 480;
-
-            this.graphics.ApplyChanges();
-        }
-
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
-        {
-            // TODO: Add your initialization logic here
-            SpriteBank.SetGame(this);
-            GSound.SetGame(this);
-            this.SetAnimationData();
-
-            base.Initialize();
-        }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            this.Services.AddService(typeof(SpriteBatch), spriteBatch);
-
-            // TODO: use this.Content to load your game content here
-        }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
-        protected override void UnloadContent()
-        {
-            // TODO: Unload any non ContentManager content here
-        }
-
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
-        {
-            //Input Update:
-            GMouse.Update(gameTime);
-            GKeyBoard.Update(gameTime);
-
-            // Allows the game to exit
-
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
-        }
-
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
-        }
-
-        private void SetAnimationData()
-        {
-        }
-    }
-}
-#else
-
 namespace PlantsVsZombies
 {
     /// <summary>
@@ -125,14 +21,12 @@ namespace PlantsVsZombies
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        Zombies.States.Attack attackAnim;
-        Zombies.States.Walk moveAnim;
-        Zombies.States.Death deathAnim;
-        Zombies.States.ZombieState currentAnim;
         List<Sprite> points = new List<Sprite>();
         Sprite root;
-        bool run = true;
         Color textColor = Color.White;
+        Counter.Timer timer;
+        Zombies.ZombiesManager ZMan;
+        Griding.Griding grid;
 
         SpriteFont tahoma;
 
@@ -141,6 +35,7 @@ namespace PlantsVsZombies
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
+            this.IsFixedTimeStep = true;
             this.TargetElapsedTime = TimeSpan.FromTicks(333333);
             this.IsMouseVisible = true;
 
@@ -163,6 +58,9 @@ namespace PlantsVsZombies
             GSound.SetGame(this);
             this.SetAnimationData();
 
+            grid = new Griding.Griding(this, this.GraphicsDevice.Viewport.Bounds, 16, 12);
+            ZMan = new Zombies.ZombiesManager(this.grid);
+
             base.Initialize();
         }
 
@@ -176,20 +74,33 @@ namespace PlantsVsZombies
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), spriteBatch);
 
-            // TODO: use this.Content to load your game content here
-            attackAnim = new Zombies.States.Attack(SpriteBank.GetAnimation(@"Images\Zombies\Zombies\Vampire\Attack"), 0);
-            attackAnim.Image.Delay = 400000;
-            moveAnim = new Zombies.States.Walk(SpriteBank.GetAnimation(@"Images\Zombies\Zombies\Vampire\Walk"), 0f);
-            moveAnim.Image.Delay = 400000;
-            deathAnim = new Zombies.States.Death(SpriteBank.GetAnimation(@"Images\Zombies\Zombies\Vampire\Death"));
-            deathAnim.Image.Delay = 400000;
-            currentAnim = attackAnim;
-
+            // TODO: use this.Content to load your game content here\
             root = SpriteBank.GetSprite(@"Images\point");
             root.Position = new Vector2(400f, 250f);
             root.Color = Color.Red;
 
+            timer = new Counter.Timer(this, 0);
+            timer.OnMeet += new Counter.EventOnCounterMeet(this.TimerTick);
+            timer.Start();
+
             tahoma = Content.Load<SpriteFont>("Tahoma");
+            this.Services.AddService(typeof(SpriteFont), tahoma);
+        }
+
+        void TimerTick(Counter.ICounter counter)
+        {
+            Zombies.Zombie zombie;
+            if (GRandom.RandomLogic(0.2))
+            {
+                zombie = new Zombies.Skeletons.Skeleton(this);
+            }
+            else
+            {
+                zombie = new Zombies.Skeletons.BarrowWight(this);
+            }
+
+            zombie.Position = GRandom.RandomVector(0, 800, 0, 480);
+            ZMan.Add(zombie);
         }
 
         /// <summary>
@@ -199,7 +110,6 @@ namespace PlantsVsZombies
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            this.attackAnim.Image.DefaultFrame = 0;
         }
 
         /// <summary>
@@ -217,65 +127,16 @@ namespace PlantsVsZombies
             if (GKeyBoard.IsKeyPressed(Keys.Escape))
                 this.Exit();
 
-            if (GKeyBoard.IsKeyPressed(Keys.Z))
+            if (GMouse.IsLeftButtonClicked)
             {
-                currentAnim.Image.Reset();
-                currentAnim = moveAnim;
-            }
-            if (GKeyBoard.IsKeyPressed(Keys.X))
-            {
-                currentAnim.Image.Reset();
-                currentAnim = attackAnim;
-            }
-            if (GKeyBoard.IsKeyPressed(Keys.C))
-            {
-                currentAnim.Image.Reset();
-                currentAnim = deathAnim;
+                Zombies.Skeletons.Skeleton zombie = new Zombies.Skeletons.Skeleton(this);
+                zombie.Position = GMouse.MousePosition;
+                ZMan.Add(zombie);
             }
 
-            if (GKeyBoard.IsKeyDown(Keys.Up))
-                ++currentAnim.Align.Y;
-            if (GKeyBoard.IsKeyDown(Keys.Down))
-                --currentAnim.Align.Y;
-            if (GKeyBoard.IsKeyDown(Keys.Left))
-                ++currentAnim.Align.X;
-            if (GKeyBoard.IsKeyDown(Keys.Right))
-                --currentAnim.Align.X;
-
-            currentAnim.Position = new Vector2(400f, 250f);
-
-            // TODO: Add your update logic here
-            if (GMouse.IsLeftButtonDoubleClick || GKeyBoard.IsKeyPressed(Keys.S))
-            {
-                if (File.Exists(@"C:\Users\Kieu Anh\Desktop\Align.txt"))
-                    File.Delete(@"C:\Users\Kieu Anh\Desktop\Align.txt");
-
-                StreamWriter wr = File.CreateText(@"C:\Users\Kieu Anh\Desktop\Align.txt");
-                
-                wr.WriteLine(string.Concat("Walk: ", moveAnim.Align.X, "\t", moveAnim.Align.Y));
-                wr.WriteLine(string.Concat("Attack: ", attackAnim.Align.X, "\t", attackAnim.Align.Y));
-                wr.WriteLine(string.Concat("Death: ", deathAnim.Align.X, "\t", deathAnim.Align.Y));
-                wr.Close();
-
-                points.Clear();
-                textColor = GRandom.RandomSolidColor();
-            }
-            else if (GMouse.IsLeftButtonClicked)
-            {
-                Sprite point = SpriteBank.GetSprite(@"Images\point");
-                point.Color = GRandom.RandomSolidColor();
-                point.Position = GMouse.MousePosition;
-                this.points.Add(point);
-            }
-
-            if (run)
-                currentAnim.Update(gameTime);
-
-            if (GKeyBoard.IsKeyPressed(Keys.Space))
-            {
-                currentAnim.Image.Reset();
-                run = !run;
-            }
+            timer.Update(gameTime);
+            grid.Update(gameTime);
+            ZMan.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -295,11 +156,7 @@ namespace PlantsVsZombies
             }
             root.Draw(gameTime);
 
-            currentAnim.Draw(gameTime);
-
-            spriteBatch.Begin();
-            spriteBatch.DrawString(tahoma, string.Concat("Current align: ", currentAnim.Align.X, ", ", currentAnim.Align.Y), Vector2.Zero, textColor);
-            spriteBatch.End();
+            ZMan.Draw(gameTime);
 
             base.Draw(gameTime);
         }
@@ -384,4 +241,3 @@ namespace PlantsVsZombies
         }
     }
 }
-#endif

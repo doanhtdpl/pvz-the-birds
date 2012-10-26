@@ -620,7 +620,8 @@ namespace GameBaseXNA
         }
         public long Delay
         {
-            set { this.delay = new TimeSpan((long)value);}
+            get { return (long) this.delay.TotalMilliseconds; }
+            set { this.delay = TimeSpan.FromMilliseconds(value);}
         }
         public bool Enable
         {

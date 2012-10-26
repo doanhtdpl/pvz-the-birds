@@ -22,7 +22,8 @@ namespace PlantsVsZombies.Counter
         #endregion
 
         #region Properties
-        public bool IsMeet { get { return timeCounter >= Interval; } }
+        private bool isMeet = false;
+        public bool IsMeet { get { return isMeet; } }
 
         public event EventOnCounterMeet OnMeet;
         #endregion
@@ -80,10 +81,15 @@ namespace PlantsVsZombies.Counter
         {
             if (this.Enabled)
             {
+                isMeet = false;
                 timeCounter += gameTime.ElapsedGameTime;
-                if (IsMeet)
+                if (timeCounter >= Interval)
                 {
-                    OnMeet(this);
+                    if (OnMeet != null)
+                        OnMeet(this);
+
+                    isMeet = true;
+
                     timeCounter = TimeSpan.Zero;
                 }
             }

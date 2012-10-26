@@ -69,6 +69,7 @@ namespace PlantsVsZombies.Griding
         public Griding(Game game)
             : base(game)
         {
+            this.Components = new List<IGridable>();
             this.range = new Rectangle();
             Grid = new Cell[0, 0];
 
@@ -82,6 +83,7 @@ namespace PlantsVsZombies.Griding
         public Griding(Game game, Rectangle range, int nRows, int nColumns)
             : base(game)
         {
+            this.Components = new List<IGridable>();
             this.range = range;
             Grid = new Cell[nRows, nColumns];
             this.nRows = nRows;
@@ -103,6 +105,8 @@ namespace PlantsVsZombies.Griding
             {
                 for (int j = 0; j < nColumns; ++j)
                 {
+                    Grid[i, j] = new Cell();
+                    Grid[i, j].Index = new Vector2(i, j);
                     Grid[i, j].Range = new Rectangle(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
                 }
             }
@@ -118,7 +122,7 @@ namespace PlantsVsZombies.Griding
             if (!GMath.IsContained(position, this.Range))
                 return null;
 
-            return this.Grid[(int )(position.X / cellWidth), (int) (position.Y / cellHeight)];
+            return this.Grid[(int )(position.Y / cellHeight), (int) (position.X / cellWidth)];
         }
 
         /// <summary>
@@ -145,22 +149,24 @@ namespace PlantsVsZombies.Griding
 
         public override void Update(GameTime gameTime)
         {
-            foreach (IGridable gr in this.Components)
+            for (int i = 0; i < this.Components.Count;)
             {
-                if (gr.PositionChanged)
+                if (this.Components[i].PositionChanged)
                 {
-                    gr.Cell.Components.Remove(gr);
-                    gr.Cell = this.IndexOf(gr.GridPosition);
-                    if (gr.Cell == null)
+                    Cell newCell = this.IndexOf(this.Components[i].GridPosition);
+                    if (newCell != null)
                     {
-                        this.Components.Remove(gr);
+                        if (newCell != this.Components[i].Cell)
+                        {
+                            this.Components[i].Cell.Components.Remove(this.Components[i]);
+                            newCell.Components.Add(this.Components[i]);
+                            this.Components[i].Cell = newCell;
+                        }
+
+                        ++i;
                     }
                     else
-                    {
-                        gr.Cell.Components.Add(gr);
-                    }
-
-                    gr.PositionChanged = false;
+                        this.Components.RemoveAt(i);
                 }
             }
 

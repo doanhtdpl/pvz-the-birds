@@ -13,31 +13,30 @@ using GameBaseXNA;
 
 namespace PlantsVsZombies.Zombies.States
 {
-    public class ZombieState : DrawableGameComponent
+    public abstract class ZombieState : DrawableGameComponent
     {
         #region Properties
+        public Zombie Zombie { get; set; }
+
         public Animation Image { get; set; }
-        public Vector2 Position
-        {
-            get
-            {
-                return (Image.Position + Align);
-            }
-            set
-            {
-                Image.Position = value - Align;
-            }
-        }
 
         public Vector2 Align = Vector2.Zero;
         #endregion
 
         #region Constructors
-        public ZombieState(Animation image)
-            : base(image.Game)
+        public ZombieState(Zombie zombie)
+            : base(zombie.Game)
+        {
+            Align = Vector2.Zero;
+            this.Zombie = zombie;
+        }
+
+        public ZombieState(Zombie zombie, Animation image)
+            : base(zombie.Game)
         {
             this.Image = image;
             Align = new Vector2(0, image.SizeY);
+            this.Zombie = zombie;
         }
 
         public ZombieState(ZombieState state)
@@ -45,6 +44,7 @@ namespace PlantsVsZombies.Zombies.States
         {
             this.Image = new Animation(state.Image);
             Align = state.Align;
+            this.Zombie = state.Zombie;
         }
         #endregion
 
@@ -53,6 +53,8 @@ namespace PlantsVsZombies.Zombies.States
         {
             if (this.Image != null)
                 this.Image.Update(gameTime);
+
+            this.CheckingState();
 
             base.Update(gameTime);
         }
@@ -63,6 +65,17 @@ namespace PlantsVsZombies.Zombies.States
                 this.Image.Draw(gameTime);
 
             base.Draw(gameTime);
+        }
+
+        public abstract void CheckingState();
+
+        public virtual void Start()
+        {
+            this.Image.Reset();
+        }
+
+        public virtual void End()
+        {
         }
         #endregion
     }
