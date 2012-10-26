@@ -27,7 +27,7 @@ namespace PlantsVsZombies.Griding
         /// <summary>
         /// Index of cell in grid
         /// </summary>
-        protected Vector2 Index;
+        public Vector2 Index;
 
         /// <summary>
         /// Components of cell
@@ -84,6 +84,7 @@ namespace PlantsVsZombies.Griding
         /// </summary>
         public Cell()
         {
+            this.Components = new List<IGridable>();
             this.Range = new Rectangle();
             this.Index = new Vector2(-1f, -1f);
         }
@@ -98,6 +99,7 @@ namespace PlantsVsZombies.Griding
         /// <param name="index">Location of cell in grid</param>
         public Cell(Griding grid, int left, int top, int width, int height, Vector2 index)
         {
+            this.Components = new List<IGridable>();
             this.Grid = grid;
             this.Range = new Rectangle(left, top, width, height);
             this.Index = index;

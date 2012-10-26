@@ -28,7 +28,7 @@ namespace PlantsVsZombies.Griding
         /// True if component position is changed
         /// The grid will automatically change its cell
         /// </summary>
-        bool PositionChanged { get; set; }
+        bool PositionChanged { get; }
 
         /// <summary>
         /// Cell of component

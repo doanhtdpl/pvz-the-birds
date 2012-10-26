@@ -16,28 +16,35 @@ namespace PlantsVsZombies.Zombies.States
     public class Death : ZombieState
     {
         #region Properties
-        bool IsComplete { get; set; }
+        public bool IsComplete { get; set; }
 
         public Counter.Timer Timer { get; set; }
         #endregion
 
         #region Constructors
-        public Death(Animation image)
-            : base(image)
+        public Death(Zombie zombie)
+            : base(zombie)
+        {
+            this.IsComplete = false;
+            this.Timer = new Counter.Timer(this.Game, int.MaxValue);
+        }
+
+        public Death(Zombie zombie, Animation image)
+            : base(zombie, image)
         {
             this.IsComplete = false;
             Timer = new Counter.Timer(this.Game, int.MaxValue);
         }
 
-        public Death(Animation image, int timeToLive)
-            : base(image)
+        public Death(Zombie zombie, Animation image, int timeToLive)
+            : base(zombie, image)
         {
             this.IsComplete = false;
             Timer = new Counter.Timer(this.Game, timeToLive);
         }
 
-        public Death(Animation image, Counter.Timer timer)
-            : base(image)
+        public Death(Zombie zombie, Animation image, Counter.Timer timer)
+            : base(zombie, image)
         {
             this.IsComplete = false;
             this.Timer = timer;
@@ -59,8 +66,27 @@ namespace PlantsVsZombies.Zombies.States
             if (this.Image.CurrentFrame != this.Image.Frames.Count - 1)
                 this.Image.Update(gameTime);
 
+            Timer.Update(gameTime);
             if (this.Timer.IsMeet)
                 this.IsComplete = true;
+        }
+
+        public override void Start()
+        {
+            this.Timer.Start();
+
+            base.Start();
+        }
+
+        public override void End()
+        {
+            this.Timer.Stop();
+
+            base.End();
+        }
+
+        public override void CheckingState()
+        {
         }
         #endregion
     }

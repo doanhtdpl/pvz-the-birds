@@ -23,10 +23,49 @@ namespace PlantsVsZombies.Zombies.Skeletons
         public BarrowWight(Game game)
             : base(game)
         {
-            this.Walk = new States.Walk(SpriteBank.GetAnimation(@"Images\Skeletons\BarrowWight\Walk"), 15f);
-            this.Attack = new States.Attack(SpriteBank.GetAnimation(@"Images\Skeletons\BarrowWight\Attack"), 20);
-            this.Death = new States.Death(SpriteBank.GetAnimation(@"Images\Skeletons\BarrowWight\Death"), 5000);
+            this.Walk = new BarrowWightWalk(this);
+            this.Attack = new BarrowWightAttack(this);
+            this.Death = new BarrowWightDeath(this);
         }
         #endregion
+
+        #region Methods
+        #endregion
+    }
+
+    public class BarrowWightWalk : States.Walk
+    {
+        #region Constructors
+        public BarrowWightWalk(BarrowWight zombie)
+            : base(zombie)
+        {
+            this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Walk");
+            this.Align = new Vector2(10, 72);
+            this.Velocity = GRandom.RandomInt(5, 15);
+        }
+        #endregion
+    }
+
+    public class BarrowWightAttack : States.Attack
+    {
+        public BarrowWightAttack(BarrowWight zombie)
+            : base(zombie)
+        {
+            this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Attack");
+            this.Align = new Vector2(18f, 92f);
+            this.Damage = 20;
+            this.AttackTimer.Interval = TimeSpan.FromMilliseconds(300);
+        }
+    }
+
+    public class BarrowWightDeath : States.Death
+    {
+        public BarrowWightDeath(BarrowWight zombie)
+            : base(zombie)
+        {
+            this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Death");
+            this.Align = new Vector2(18f, 92f);
+            this.Timer.Interval = TimeSpan.FromMilliseconds(2000);
+        }
     }
 }
