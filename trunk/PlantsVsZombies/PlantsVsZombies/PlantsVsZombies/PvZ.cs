@@ -199,6 +199,7 @@ namespace PlantsVsZombies
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            this.attackAnim.Image.DefaultFrame = 0;
         }
 
         /// <summary>
