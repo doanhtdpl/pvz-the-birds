@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameBaseXNA", "GameBaseXNA\GameBaseXNA.csproj", "{33AC476A-93D9-494D-9C58-C9D2AE85E17A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Windows Phone = Debug|Windows Phone
+		Release|Windows Phone = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{33AC476A-93D9-494D-9C58-C9D2AE85E17A}.Debug|Windows Phone.ActiveCfg = Debug|Windows Phone
+		{33AC476A-93D9-494D-9C58-C9D2AE85E17A}.Debug|Windows Phone.Build.0 = Debug|Windows Phone
+		{33AC476A-93D9-494D-9C58-C9D2AE85E17A}.Release|Windows Phone.ActiveCfg = Release|Windows Phone
+		{33AC476A-93D9-494D-9C58-C9D2AE85E17A}.Release|Windows Phone.Build.0 = Release|Windows Phone
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
