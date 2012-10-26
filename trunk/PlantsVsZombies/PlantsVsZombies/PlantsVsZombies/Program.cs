@@ -2,6 +2,7 @@ using System;
 
 namespace PlantsVsZombies
 {
+    using PvZGame = LuongPvZ;
 #if WINDOWS || XBOX
     static class Program
     {
@@ -10,7 +11,7 @@ namespace PlantsVsZombies
         /// </summary>
         static void Main(string[] args)
         {
-            using (PvZ game = new PvZ())
+            using (PvZGame game = new PvZGame())
             {
                 game.Run();
             }
