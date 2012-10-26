@@ -60,8 +60,7 @@
     <XnaCompressContent>true</XnaCompressContent>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GameBaseXNA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="GameBaseXNA">
       <HintPath>..\..\..\GameBaseXNA\GameBaseXNA\bin\Windows Phone\Debug\GameBaseXNA.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
@@ -78,10 +77,18 @@
   <ItemGroup>
     <Compile Include="Counter\ICounter.cs" />
     <Compile Include="Counter\Timer.cs" />
+    <Compile Include="Effect\Effect.cs" />
+    <Compile Include="Effect\Partical.cs" />
     <Compile Include="Griding\Cell.cs" />
     <Compile Include="Griding\Griding.cs" />
     <Compile Include="Griding\IGridable.cs" />
     <Compile Include="HieuPvZ.cs" />
+    <Compile Include="Plants_Bullets\Bullets\Bullet.cs" />
+    <Compile Include="Plants_Bullets\Bullets\BulletBomber.cs" />
+    <Compile Include="Plants_Bullets\Bullets\BulletManager.cs" />
+    <Compile Include="Plants_Bullets\Bullets\BulletShooter.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_DPea.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_Pea.cs" />
     <Compile Include="Zombies\Skeletons\BarrowWight.cs" />
     <Compile Include="Zombies\States\Attack.cs" />
     <Compile Include="Zombies\States\Death.cs" />
@@ -130,6 +137,9 @@
       <ProductName>Microsoft XNA Framework Redistributable 4.0</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Plants_Bullets\Plant\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
