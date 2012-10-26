@@ -17,7 +17,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     {
         // Fields
         protected Sprite sprite;
-        protected Vector2 velocity = new Vector2(1f, 0f);
+        protected Vector2 velocity = new Vector2(5f, 0f);
 
         // Properties
         public Sprite BSprite
@@ -25,19 +25,28 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             get { return this.sprite; }
             set { this.sprite = value; }
         }
+
         public Vector2 Velocity
         {
             get { return this.velocity; }
             set { this.velocity = value; }
         }
 
-        public BulletShooter(Game game)
-            : base(game)
+        public Vector2 Position
+        {
+            get { return this.sprite.Position; }
+            set { this.sprite.Position = value; }
+        }
+
+        // Constructor
+        public BulletShooter(Game game, Vector2 position)
+            : base(game, position)
         {
         }
 
         public override void Initialize()
         {
+            this.sprite.Position = position;
             base.Initialize();
         }
 

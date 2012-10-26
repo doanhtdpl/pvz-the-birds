@@ -15,46 +15,49 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class B_IcePea : BulletShooter
     {
         // Fields
-        protected string BName = @"Images\\BPea";
-        protected string BEffect = @"Images\\BPeaEffect";
 
-        public B_IcePea(Game game)
-            : base(game)
+        // Amount in percent to slow down the enemy when it's attacked
+        protected float slowDown;
+
+        // Properties
+        public float SlowDown
+        {
+            get { return this.slowDown; }
+        }
+
+        public B_IcePea(Game game, Vector2 position)
+            : base(game, position)
         {
         }
 
         public override void Initialize()
         {
+            this.BName = @"Images\\Plants\\B_IcePea";
+            this.B_Effect = @"Images\\Plants\\B_IcePeaEffect";
+
             this.BSprite = SpriteBank.GetSprite(BName);
+            this.damage = 100;
+            this.slowDown = 0.5f;
             base.Initialize();
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
-
-        public override void Draw(GameTime gameTime)
-        {
-            base.Draw(gameTime);
         }
     }
 
-    public class B_IcePeaEngine
+    public class B_IcePeaEngine : BulletEngine
     {
         // Fields
         protected BulletManager bulletManager;
 
         // Methods
-        public B_IcePeaEngine()
+        public B_IcePeaEngine(Game game, BulletManager bulletManager)
+            : base(game, bulletManager)
         {
         }
 
-        // Add new Pea bullet to bulletManager
-        public bool AddB_Pea(B_IcePea bPea)
+        // Add Pea Bullet
+        public override void AddBullet(Vector2 position)
         {
-            bulletManager.AddBullet(bPea);
-            return true;
+            B_IcePea b_pea = new B_IcePea(this.Game, position);
+            this.Add(b_pea);
         }
     }
 }

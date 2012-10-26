@@ -32,6 +32,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Update(GameTime gameTime)
         {
+            AutoRemove();
             List<Bullet> bulletsCopy = new List<Bullet>(bullets);
             foreach (Bullet bullet in bulletsCopy)
             {
@@ -58,10 +59,14 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public void AutoRemove()
         {
-//             List<Bullet> bulletsCopy = new List<Bullet>(bullets);
-//             foreach (Bullet bullet in bulletsCopy)
-//             {
-//             }
+            List<Bullet> bulletsCopy = new List<Bullet>(bullets);
+            foreach (Bullet bullet in bulletsCopy)
+            {
+                if (bullet.IsCollided)
+                {
+                    this.bullets.Remove(bullet);
+                }
+            }
         }
     }
 }

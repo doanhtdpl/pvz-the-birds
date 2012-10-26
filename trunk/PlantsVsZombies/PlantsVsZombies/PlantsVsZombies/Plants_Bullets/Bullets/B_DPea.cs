@@ -12,49 +12,49 @@ using GameBaseXNA;
 
 namespace PlantsVsZombies.Plants_Bullets.Bullets
 {
-    public class B_DPea : BulletShooter
+    public class B_DPeaEngine : B_PeaEngine
     {
         // Fields
-        protected string BName = @"Images\\BPea";
-        protected string BEffect = @"Images\\BPeaEffect";
-
-        public B_DPea(Game game)
-            : base(game)
+        protected Counter.Timer timer;
+        protected int delay = 500;
+        protected Vector2 position;
+        
+        public B_DPeaEngine(Game game, BulletManager bulletManager)
+            : base(game, bulletManager)
         {
+            timer = new Counter.Timer(game, delay);
+            timer.OnMeet += new Counter.EventOnCounterMeet(timer_OnMeet);
         }
 
-        public override void Initialize()
-        {
-            this.BSprite = SpriteBank.GetSprite(BName);
-            base.Initialize();
-        }
-
+        // Methods
         public override void Update(GameTime gameTime)
         {
+            timer.Update(gameTime);
             base.Update(gameTime);
         }
 
-        public override void Draw(GameTime gameTime)
+        public override void AddBullet(Vector2 position)
         {
-            base.Draw(gameTime);
-        }
-    }
+            this.position = position;
 
-    public class B_DPeaEngine
-    {
-        // Fields
-        protected BulletManager bulletManager;
-
-        // Methods
-        public B_DPeaEngine()
-        {
+            // Reset delay
+            timer.Start();
+            base.AddBullet(position);
         }
 
-        // Add new Pea bullet to bulletManager
-        public bool AddB_Pea(B_DPea bPea)
+        public void timer_OnMeet(object o)
         {
-            bulletManager.AddBullet(bPea);
-            return true;
+            AddBullet(position);
+
+            // Reset timer
+            ResetTimer();
+        }
+
+        // Reset timer for add bullet after
+        protected void ResetTimer()
+        {
+            timer.Stop();
+            timer.Reset();
         }
     }
 }
