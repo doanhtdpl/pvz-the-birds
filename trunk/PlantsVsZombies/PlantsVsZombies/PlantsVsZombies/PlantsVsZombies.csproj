@@ -83,6 +83,18 @@
     <Compile Include="Griding\Griding.cs" />
     <Compile Include="Griding\IGridable.cs" />
     <Compile Include="HieuPvZ.cs" />
+    <Compile Include="Plants_Bullets\Bullets\BulletEngine.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_Cherry.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_Chilli.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_FreeMush.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_IcePea.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_Mine.cs" />
+    <Compile Include="Plants_Bullets\Bullets\B_WaterMush.cs" />
+    <Compile Include="Plants_Bullets\Plant\AttackPlant.cs" />
+    <Compile Include="Plants_Bullets\Plant\Pea.cs" />
+    <Compile Include="Plants_Bullets\Plant\Plant.cs" />
+    <Compile Include="Plants_Bullets\Plant\PlantManager.cs" />
+    <Compile Include="Plants_Bullets\Plant\SupportPlant.cs" />
     <Compile Include="Zombies\Impacts\Cold.cs" />
     <Compile Include="Zombies\Impacts\Damaging.cs" />
     <Compile Include="Zombies\Impacts\Impact.cs" />
@@ -143,9 +155,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Plants_Bullets\Plant\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--
