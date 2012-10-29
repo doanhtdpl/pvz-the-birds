@@ -36,7 +36,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = "Images\\Plants\\B_Chili";
+            this.BName = "Images\\Bullets\\B_Chili";
             //this.B_Effect = @"Images\\Plants\\B_ChilliEffect";
             this.damage = 500;
 
@@ -62,6 +62,16 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
                 ani.Position = new Vector2(tmp, position.Y);
                 animations.Add(ani);
             }
+        }
+
+        protected override void CollisionDetect()
+        {
+            if (this.Cell == null)
+                return;
+
+            Griding.Cell[] line = this.Cell.Line;
+            for (int i = 0; i < line.Length; ++i)
+                this.CollisionDetectOnCell(line[i]);
         }
     }
 

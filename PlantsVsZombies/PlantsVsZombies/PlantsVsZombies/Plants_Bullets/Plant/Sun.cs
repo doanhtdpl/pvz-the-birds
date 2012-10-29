@@ -73,7 +73,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         public override void Initialize()
         {
-            animation = SpriteBank.GetAnimation("Images\\Plants\\SunMush0");
+            animation = SpriteBank.GetAnimation("Images\\Plants\\SunMushroom");
             vBank = Vector2.Zero;
             done = false;
             toBank = false;

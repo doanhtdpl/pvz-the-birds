@@ -29,12 +29,15 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+        }
+
+        protected override void AttackDetect()
+        {
             if (currentAnimation.CurrentFrame == currentAnimation.Frames.Count - 1)
             {
-                this.plantState = PlantState.DIE;
-                this.AddBullet();
+                this.plantState = PlantState.ATTACK;
             }
-            base.Update(gameTime);
         }
 
         protected override void SetAnimation()
@@ -47,14 +50,14 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetBulletPosition()
         {
             // Bullet position
-            Griding.Cell cell = plantManager.GetGriding.IndexOf(currentAnimation.Position);
+            Griding.Cell cell = plantManager.GetGriding.IndexOf(this);
             this.bulletPosition.X = cell.Range.X;
             this.bulletPosition.Y = cell.Range.Y;
         }
 
-        protected new void shootTimer_OnMeet(object o)
+        protected override void shootTimer_OnMeet(object o)
         {
-            ChangeState(Plant.PlantState.DIE);
+            this.ChangeState(PlantState.DIE);
             shootTimer.Stop();
 
             base.shootTimer_OnMeet(o);

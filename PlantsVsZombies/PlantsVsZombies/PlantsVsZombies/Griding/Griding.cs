@@ -106,6 +106,7 @@ namespace PlantsVsZombies.Griding
                 for (int j = 0; j < nColumns; ++j)
                 {
                     Grid[i, j] = new Cell();
+                    Grid[i, j].Grid = this;
                     Grid[i, j].Index = new Vector2(i, j);
                     Grid[i, j].Range = new Rectangle(this.range.X + j * cellWidth, this.range.Y + i * cellHeight, cellWidth, cellHeight);
                     Grid[i, j].Range = new Rectangle(j * cellWidth + this.range.X, i * cellHeight + this.range.Y, cellWidth, cellHeight);
@@ -123,7 +124,7 @@ namespace PlantsVsZombies.Griding
             if ((this.Range.X > position.X) || (this.Range.Y > position.Y) || (this.Range.X + this.Range.Width <= position.X) || (this.Range.Y + this.Range.Height <= position.Y)) 
                 return null;
 
-            return this.Grid[(int )(position.Y / cellHeight), (int) (position.X / cellWidth)];
+            return this.Grid[(int)((position.Y - this.Range.Y) / cellHeight), (int)((position.X - this.Range.X) / cellWidth)];
         }
 
         /// <summary>

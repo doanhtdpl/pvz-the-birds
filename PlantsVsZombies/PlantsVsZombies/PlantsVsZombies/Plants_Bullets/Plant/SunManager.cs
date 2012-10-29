@@ -22,6 +22,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Fall SunEngine
         protected FallSunEngine fallSunEngine;
 
+        public int NumberOfSuns { get; set; }
+
         public Griding.Griding SetGriding
         {
             set 
@@ -38,6 +40,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public SunManager(Game game)
             : base(game)
         {
+            this.NumberOfSuns = 0;
             this.Initialize();
         }
 
@@ -86,6 +89,9 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             {
                 if (sun.IsDone || sun.IsLost)
                 {
+                    if (sun.IsDone)
+                        this.NumberOfSuns += sun.SunValue;
+
                     this.suns.Remove(sun);
                 }
             }

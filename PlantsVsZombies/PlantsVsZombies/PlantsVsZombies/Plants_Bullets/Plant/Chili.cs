@@ -32,30 +32,17 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             base.Update(gameTime);
         }
 
-        protected override void RangeDetect()
+        protected override void AttackDetect()
         {
             if (currentAnimation.CurrentFrame == currentAnimation.Frames.Count - 1)
             {
                 ChangeState(Plant.PlantState.ATTACK);
             }
-            else if (this.health == 0)
-            {
-                ChangeState(Plant.PlantState.DIE);
-            }
-            else
-            {
-                ChangeState(Plant.PlantState.NORMAL);
-            }
-        }
-
-        protected override void CalculateRange()
-        {
-            base.CalculateRange();
         }
 
         protected override void SetAnimation()
         {
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Chilli"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Chilly"));
             this.currentAnimation = this.animations[0];
             base.SetAnimation();
         }

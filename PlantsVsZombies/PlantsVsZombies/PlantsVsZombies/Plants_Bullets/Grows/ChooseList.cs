@@ -31,7 +31,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         #endregion
 
         #region Methods
-        public virtual bool AddGrowButton(GrowButton grButton)
+        public virtual bool AddGrowButton(GrowButtons.GrowButton grButton)
         {
             if (!this.Add(grButton))
                 return false;
@@ -40,7 +40,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             return true;
         }
 
-        public virtual void RemoveGrowButton(GrowButton grButton)
+        public virtual void RemoveGrowButton(GrowButtons.GrowButton grButton)
         {
             this.RemoveControl(grButton);
             grButton.Clicked -= new EventHandler(this.GrowButtonChoose);
@@ -48,9 +48,9 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
 
         public virtual void GrowButtonChoose(object sender, EventArgs e)
         {
-            if (this.Manager.BuyList.Add((GrowButton)sender))
+            if (this.Manager.BuyList.Add((GrowButtons.GrowButton)sender))
             {
-                this.RemoveControl((GrowButton)sender);
+                this.RemoveControl((GrowButtons.GrowButton)sender);
             }
         }
         #endregion

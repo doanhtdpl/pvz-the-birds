@@ -55,38 +55,29 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected override void SetAnimation()
         {
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Mine1"));
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Mine0"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\MineGrow"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Mine"));
             this.currentAnimation = this.animations[0];
             this.currentAnimation.Enable = false;
             this.growUpTimer.Start();
             base.SetAnimation();
         }
 
-        protected override void RangeDetect()
+        protected override void AttackDetect()
         {
-            if (GMouse.MousePosition.X >= this.currentAnimation.Position.X &&
-                GMouse.MousePosition.X <= range &&
-                GMouse.MousePosition.Y >= this.currentAnimation.Position.Y &&
-                GMouse.MousePosition.Y <= this.currentAnimation.Position.Y + plantManager.GetGriding.CellHeight)
-            {
-                if(currentAnimation == animations[1])
-                    ChangeState(Plant.PlantState.ATTACK);
-            }
-            else if (this.health == 0)
-            {
-                ChangeState(Plant.PlantState.DIE);
-            }
-            else
-            {
-                ChangeState(Plant.PlantState.NORMAL);
-            }
-        }
+            this.ChangeState(PlantState.NORMAL);
 
-        protected override void CalculateRange()
-        {
-            range = (int)this.Position.X + plantManager.GetGriding.CellWidth;
-            base.CalculateRange();
+            if ((this.currentAnimation == this.animations[1]) && this.Cell != null)
+            {
+                foreach (Griding.IGridable grc in this.Cell.Components)
+                {
+                    if (grc is Zombies.Zombie)
+                    {
+                        this.ChangeState(PlantState.ATTACK);
+                        return;
+                    }
+                }
+            }
         }
 
         protected override void SetBulletPosition()

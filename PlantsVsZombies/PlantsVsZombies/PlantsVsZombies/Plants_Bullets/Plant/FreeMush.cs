@@ -35,7 +35,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected override void SetAnimation()
         {
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\FreeMush"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\FreeMushroom"));
             this.currentAnimation = this.animations[0];
             base.SetAnimation();
         }
@@ -45,6 +45,13 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             // Bullet position
             this.bulletPosition.X = this.currentAnimation.PositionX + this.currentAnimation.SizeX - 20f;
             this.bulletPosition.Y = this.currentAnimation.PositionY + 1f / 2 * (float)this.currentAnimation.SizeY;
+        }
+
+        protected override void shootTimer_OnMeet(object o)
+        {
+            shootTimer.Stop();
+
+            base.shootTimer_OnMeet(o);
         }
     }
 }

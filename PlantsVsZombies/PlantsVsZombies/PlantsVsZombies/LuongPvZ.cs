@@ -167,6 +167,7 @@ namespace PlantsVsZombies
 
         private void SetAnimationData()
         {
+            //Zombies
             SpriteBank.SetAnimationData(@"Images\Zombies\Skeletons\BarrowWight\Attack", 73, 101, 14, 15);
             SpriteBank.SetAnimationData(@"Images\Zombies\Skeletons\BarrowWight\Death", 103, 105, 9, 16);
             SpriteBank.SetAnimationData(@"Images\Zombies\Skeletons\BarrowWight\Walk", 64, 81, 16, 17);
@@ -242,6 +243,39 @@ namespace PlantsVsZombies
             SpriteBank.SetAnimationData(@"Images\Zombies\Zombies\Vampire\Attack", 65, 76, 13, 13);
             SpriteBank.SetAnimationData(@"Images\Zombies\Zombies\Vampire\Death", 89, 92, 11, 21);
             SpriteBank.SetAnimationData(@"Images\Zombies\Zombies\Vampire\Walk", 81, 79, 11, 11);
+
+            //Plants & Bullets
+            SpriteBank.SetAnimationData("Images\\Plants\\Cherry", 126, 86, 8, 24);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_Cherry", 74, 80, 14, 17);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Chilly", 78, 75, 13, 24);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_Chili", 31, 44, 22, 22);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\DPea", 100, 55, 10, 40);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\IcePea", 113, 79, 9, 33);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_IcePea", 29, 22, 1, 1);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Pea", 92, 62, 11, 33);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_Pea", 29, 22, 1, 1);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\FreeMush", 44, 34, 24, 35);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_FreeMush", 26, 11, 1, 1);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\SeaMushroom", 58, 51, 18, 48);
+            SpriteBank.SetAnimationData("Images\\Bullets\\B_WaterMush", 31, 24, 1, 1);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Mine", 83, 47, 12, 17);
+            SpriteBank.SetAnimationData("Images\\Plants\\MineGrow", 113, 53, 9, 30);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Stone", 101, 101, 10, 38);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Sun", 51, 40, 1, 1);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\Sunflower", 84, 60, 12, 48);
+
+            SpriteBank.SetAnimationData("Images\\Plants\\SunMushroom", 46, 38, 23, 26);
+            SpriteBank.SetAnimationData("Images\\Plants\\SunMushroomGreater", 60, 49, 17, 26);
         }
     }
 }

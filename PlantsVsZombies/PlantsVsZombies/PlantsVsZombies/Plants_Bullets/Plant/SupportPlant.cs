@@ -21,23 +21,6 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Timer delay
         protected Counter.Timer delayTimer;
 
-        // Position changed
-        public Vector2 Position
-        {
-            get { return this.currentAnimation.Position; }
-            set
-            {
-                this.PositionChanged = true;
-                Griding.Cell cell = plantManager.GetGriding.IndexOf(this.position);
-                Vector2 pos = new Vector2(cell.Range.Left, cell.Range.Top);
-                this.position = pos;
-                foreach (Animation ani in animations)
-                {
-                    ani.PositionX = pos.X;
-                    ani.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
-                }
-            }
-        }
 
         public new Rectangle Bound
         {

@@ -2,7 +2,7 @@ using System;
 
 namespace PlantsVsZombies
 {
-    using PvZGame = LuongPvZ;
+    using PvZGame = HieuPvZ;
 #if WINDOWS || XBOX
     static class Program
     {
