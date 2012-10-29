@@ -57,6 +57,9 @@ namespace PlantsVsZombies.Zombies.States
                 return;
             }
 
+            if (this.Zombie.Cell == null)
+                return;
+
             foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
             {
                 Zombie zombie = grc as Zombie;

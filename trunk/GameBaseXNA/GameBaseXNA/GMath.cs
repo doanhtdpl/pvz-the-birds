@@ -990,5 +990,40 @@ namespace GameBaseXNA
             return IsContained(rect1, origin1, angle1, scale1, Vector2.Zero, Matrix.Identity, rect2, origin2, angle2, scale2, Vector2.Zero, Matrix.Identity);
         }
 
+        /// <summary>
+        /// Return blended color from color A and B with specified gamma blend ratio
+        /// </summary>
+        /// <param name="A">Color A</param>
+        /// <param name="B">Color B</param>
+        /// <param name="gamma">Gamma ratio</param>
+        /// <returns>Blended Color</returns>
+        public static Color GammaBlend(Color A, Color B, float gamma)
+        {
+            Color blended = Color.White;
+            blended.A = (byte)(gamma * A.A + (1 - gamma) * B.A);
+            blended.R = (byte)(gamma * A.R + (1 - gamma) * B.R);
+            blended.G = (byte)(gamma * A.G + (1 - gamma) * B.G);
+            blended.B = (byte)(gamma * A.B + (1 - gamma) * B.B);
+
+            return blended;
+        }
+
+        /// <summary>
+        /// Return color from blended color using gamma blend and one other source color
+        /// </summary>
+        /// <param name="blended">Blended Color</param>
+        /// <param name="source">Other source color</param>
+        /// <param name="gamma">Gamma ratio</param>
+        /// <returns>Source color</returns>
+        public static Color DeGammaBlend(Color blended, Color source, float gamma)
+        {
+            Color result = Color.White;
+            result.A = (byte)((blended.A - ((1 - gamma) * source.A)) / gamma);
+            result.R = (byte)((blended.R - ((1 - gamma) * source.R)) / gamma);
+            result.G = (byte)((blended.G - ((1 - gamma) * source.G)) / gamma);
+            result.B = (byte)((blended.B - ((1 - gamma) * source.B)) / gamma);
+
+            return result;
+        }
     }
 }
