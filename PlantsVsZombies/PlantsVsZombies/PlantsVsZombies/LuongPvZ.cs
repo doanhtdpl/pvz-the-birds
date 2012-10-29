@@ -22,10 +22,9 @@ namespace PlantsVsZombies
         SpriteBatch spriteBatch;
 
         List<Sprite> points = new List<Sprite>();
-        Sprite root;
         Color textColor = Color.White;
         Counter.Timer timer;
-        Zombies.ZombiesManager ZMan;
+        Zombies.Managers.ZombiesManager ZMan;
         Griding.Griding grid;
 
         SpriteFont tahoma;
@@ -58,8 +57,8 @@ namespace PlantsVsZombies
             GSound.SetGame(this);
             this.SetAnimationData();
 
-            grid = new Griding.Griding(this, this.GraphicsDevice.Viewport.Bounds, 16, 12);
-            ZMan = new Zombies.ZombiesManager(this.grid);
+            grid = new Griding.Griding(this, this.GraphicsDevice.Viewport.Bounds, 5, 9);
+            ZMan = new Zombies.Managers.ZombiesManager(this.grid);
 
             base.Initialize();
         }
@@ -74,12 +73,8 @@ namespace PlantsVsZombies
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), spriteBatch);
 
-            // TODO: use this.Content to load your game content here\
-            root = SpriteBank.GetSprite(@"Images\point");
-            root.Position = new Vector2(400f, 250f);
-            root.Color = Color.Red;
-
-            timer = new Counter.Timer(this, 0);
+            // TODO: use this.Content to load your game content here
+            timer = new Counter.Timer(this, 2000);
             timer.OnMeet += new Counter.EventOnCounterMeet(this.TimerTick);
             timer.Start();
 
@@ -90,17 +85,20 @@ namespace PlantsVsZombies
         void TimerTick(Counter.ICounter counter)
         {
             Zombies.Zombie zombie;
-            if (GRandom.RandomLogic(0.2))
+            if (GRandom.RandomLogic(0.3))
             {
                 zombie = new Zombies.Skeletons.Skeleton(this);
             }
-            else
+            else if (GRandom.RandomLogic(0.6))
             {
                 zombie = new Zombies.Skeletons.BarrowWight(this);
             }
-
-            zombie.Position = GRandom.RandomVector(0, 800, 0, 480);
-            ZMan.Add(zombie);
+            else
+            {
+                zombie = new Zombies.Skeletons.BladeSkeleton(this);
+            }
+            
+            ZMan.Add(zombie, GRandom.RandomInt(grid.NumberOfRows));
         }
 
         /// <summary>
@@ -129,7 +127,14 @@ namespace PlantsVsZombies
 
             if (GMouse.IsLeftButtonClicked)
             {
-                Zombies.Skeletons.Skeleton zombie = new Zombies.Skeletons.Skeleton(this);
+                Zombies.Zombie zombie = new Zombies.Zombies.Vampire(this);
+                zombie.Position = GMouse.MousePosition;
+                ZMan.Add(zombie);
+            }
+
+            if (GMouse.IsRightButtonClicked)
+            {
+                Zombies.Skeletons.BarrowWight zombie = new Zombies.Skeletons.BarrowWight(this);
                 zombie.Position = GMouse.MousePosition;
                 ZMan.Add(zombie);
             }
@@ -147,14 +152,13 @@ namespace PlantsVsZombies
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Green);
 
             // TODO: Add your drawing code here
             foreach (Sprite point in this.points)
             {
                 point.Draw(gameTime);
             }
-            root.Draw(gameTime);
 
             ZMan.Draw(gameTime);
 

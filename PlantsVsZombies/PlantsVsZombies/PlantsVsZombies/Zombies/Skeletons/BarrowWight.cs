@@ -40,6 +40,7 @@ namespace PlantsVsZombies.Zombies.Skeletons
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Walk");
+            this.Image.Delay = 40;
             this.Align = new Vector2(10, 72);
             this.Velocity = GRandom.RandomInt(5, 15);
         }
@@ -52,9 +53,18 @@ namespace PlantsVsZombies.Zombies.Skeletons
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Attack");
+            this.Image.Delay = 40;
             this.Align = new Vector2(18f, 92f);
-            this.Damage = 20;
-            this.AttackTimer.Interval = TimeSpan.FromMilliseconds(300);
+            this.Damage = 2;
+            this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
+        }
+
+        public override void Damaging(Zombie zombie)
+        {
+            Impacts.Cold cold = new Impacts.Cold(this.Game, 3000, 0.5f);
+            zombie.AddImpact(cold);
+
+            base.Damaging(zombie);
         }
     }
 
@@ -64,6 +74,7 @@ namespace PlantsVsZombies.Zombies.Skeletons
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\BarrowWight\Death");
+            this.Image.Delay = 40;
             this.Align = new Vector2(18f, 92f);
             this.Timer.Interval = TimeSpan.FromMilliseconds(2000);
         }

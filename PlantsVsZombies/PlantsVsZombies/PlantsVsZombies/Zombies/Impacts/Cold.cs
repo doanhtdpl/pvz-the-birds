@@ -17,8 +17,7 @@ namespace PlantsVsZombies.Zombies.Impacts
     {
         #region Fields & Properties
         public Counter.Timer Timer { get; set; }
-        public int ColdAffect { get; set; }
-        private int appliedAffect;
+        public float ColdAffect { get; set; }
 
         public bool IsCompleted { get { return this.isCompleted; } }
         private bool isCompleted = false;
@@ -28,12 +27,12 @@ namespace PlantsVsZombies.Zombies.Impacts
         public Cold(Game game)
             : base(game)
         {
-            this.Timer = new Counter.Timer(game, 0);
+            this.Timer = new Counter.Timer(game, 3000);
             this.Timer.OnMeet += new Counter.EventOnCounterMeet(this.OnTimerTick);
-            this.ColdAffect = 0;
+            this.ColdAffect = 0.5f;
         }
 
-        public Cold(Game game, int coldTime, int coldAffect)
+        public Cold(Game game, int coldTime, float coldAffect)
             : base(game)
         {
             this.Timer = new Counter.Timer(game, coldTime);
@@ -69,47 +68,101 @@ namespace PlantsVsZombies.Zombies.Impacts
             return nCold;
         }
 
-        public virtual void Apply(States.ZombieState state)
+        public virtual bool Apply(States.ZombieState state)
         {
-            int nCold = GetZombieColds(state.Zombie);
+            this.Timer.Start();
 
-            if (nCold == 0)
-                state.Image.Color = Color.CornflowerBlue;
-
-            this.appliedAffect = (int) ((1f / (nCold + 1)) * ColdAffect);
-            state.Image.Delay = state.Image.Delay + appliedAffect;
-
-
-            States.Walk walk = state as States.Walk;
-            if (walk != null)
+            if (!(state is States.Death) && GetZombieColds(state.Zombie) == 0)
             {
-                double vel = walk.Velocity * this.Game.TargetElapsedTime.TotalMilliseconds;
-                vel /= (this.Game.TargetElapsedTime.TotalMilliseconds + appliedAffect);
-                walk.Velocity = (int)vel;
+                state.Image.Color = GMath.GammaBlend(state.Image.Color, Color.Blue, 0.5f);
+                state.Image.Delay = (long)(state.Image.Delay / ColdAffect);
+
+                States.Walk walk = state as States.Walk;
+                if (walk != null)
+                {
+                    walk.Velocity *= ColdAffect;
+                }
+
+                States.Attack att = state as States.Attack;
+                if (att != null)
+                {
+                    att.AttackTimer.Interval = TimeSpan.FromMilliseconds(att.AttackTimer.Interval.TotalMilliseconds / ColdAffect);
+                }
+
+                return true;
             }
+
+            return false;
         }
 
         public virtual void Remove(States.ZombieState state)
         {
-            int nCold = GetZombieColds(state.Zombie);
+            this.Timer.Stop();
 
-            if (nCold == 1)
-                state.Image.Color = Color.White;
-
-            state.Image.Delay = state.Image.Delay - this.appliedAffect;
-
-            States.Walk walk = state as States.Walk;
-            if (walk != null)
+            if (!(state is States.Death))
             {
-                double vel = walk.Velocity * (this.Game.TargetElapsedTime.TotalMilliseconds + this.appliedAffect);
-                vel /= (this.Game.TargetElapsedTime.TotalMilliseconds + (long)((1f / (nCold + 1)) * ColdAffect));
-                walk.Velocity = (int)vel;
+                state.Image.Color = GMath.DeGammaBlend(state.Image.Color, Color.Blue, 0.5f);
+                state.Image.Delay = (long)(state.Image.Delay * ColdAffect);
+
+                States.Walk walk = state as States.Walk;
+                if (walk != null)
+                {
+                    walk.Velocity /= ColdAffect;
+                }
+
+                States.Attack att = state as States.Attack;
+                if (att != null)
+                {
+                    att.AttackTimer.Interval = TimeSpan.FromMilliseconds(att.AttackTimer.Interval.TotalMilliseconds * ColdAffect);
+                }
             }
         }
 
         public virtual void ChangeState(States.ZombieState currentState, States.ZombieState lastState)
         {
+                if (!(currentState is States.Death))
+                {
+                    currentState.Image.Color = GMath.GammaBlend(currentState.Image.Color, Color.Blue, 0.5f);
+                    currentState.Image.Delay = (long)(currentState.Image.Delay / ColdAffect);
 
+                    States.Walk cwalk = currentState as States.Walk;
+                    if (cwalk != null)
+                    {
+                        cwalk.Velocity *= ColdAffect;
+                    }
+
+                    States.Attack catt = currentState as States.Attack;
+                    if (catt != null)
+                    {
+                        catt.AttackTimer.Interval = TimeSpan.FromMilliseconds(catt.AttackTimer.Interval.TotalMilliseconds / ColdAffect);
+                    }
+                }
+
+
+                if (!(lastState is States.Death))
+                {
+                    lastState.Image.Color = GMath.DeGammaBlend(lastState.Image.Color, Color.Blue, 0.5f);
+                    lastState.Image.Delay = (long)(lastState.Image.Delay * ColdAffect);
+
+                    States.Walk lwalk = lastState as States.Walk;
+                    if (lwalk != null)
+                    {
+                        lwalk.Velocity /= ColdAffect;
+                    }
+
+                    States.Attack latt = lastState as States.Attack;
+                    if (latt != null)
+                    {
+                        latt.AttackTimer.Interval = TimeSpan.FromMilliseconds(latt.AttackTimer.Interval.TotalMilliseconds * ColdAffect);
+                    }
+                }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            Timer.Update(gameTime);
+
+            base.Update(gameTime);
         }
         #endregion
     }

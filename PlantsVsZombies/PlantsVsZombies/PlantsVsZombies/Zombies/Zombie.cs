@@ -44,7 +44,7 @@ namespace PlantsVsZombies.Zombies
 
                     foreach (Impacts.IZombieImpact impact in this.Impacts)
                     {
-                        impact.ChangeState(lastState, this.CurrentZombieState);
+                        impact.ChangeState(this.CurrentZombieState, lastState);
                     }
                 }
             }
@@ -85,7 +85,7 @@ namespace PlantsVsZombies.Zombies
         }
 
         public int LP { get; set; }
-        public bool NeedRemove { get { return ((this.Cell == null) || ((this.currentState == ZombieState.Death) && (this.Death.IsComplete))); } }
+        public bool NeedRemove { get { return ((this.currentState == ZombieState.Death) && (this.Death.IsComplete)); } }
         public List<Impacts.IZombieImpact> Impacts { get; set; }
         #endregion
 
@@ -120,12 +120,12 @@ namespace PlantsVsZombies.Zombies
         {
             this.CurrentZombieState.Draw(gameTime);
 
-            SpriteBatch sprBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
-            SpriteFont font = (SpriteFont)this.Game.Services.GetService(typeof(SpriteFont));
-
-            sprBatch.Begin();
-            sprBatch.DrawString(font, String.Concat(this.Cell.Index.X, ", ", this.Cell.Index.Y), this.Position, Color.White);
-            sprBatch.End();
+//             SpriteBatch sprBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
+//             SpriteFont font = (SpriteFont)this.Game.Services.GetService(typeof(SpriteFont));
+// 
+//             sprBatch.Begin();
+//             sprBatch.DrawString(font, String.Concat(this.Cell.Index.X, ", ", this.Cell.Index.Y), this.Position, Color.White);
+//             sprBatch.End();
 
             base.Draw(gameTime);
         }
@@ -153,8 +153,8 @@ namespace PlantsVsZombies.Zombies
 
         public virtual void AddImpact(Impacts.IZombieImpact impact)
         {
-            this.Impacts.Add(impact);
-            impact.Apply(this.CurrentZombieState);
+            if (impact.Apply(this.CurrentZombieState))
+                this.Impacts.Add(impact);
         }
         #endregion
     }

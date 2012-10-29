@@ -73,11 +73,17 @@ namespace PlantsVsZombies.Zombies.States
             foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
             {
                 Zombie zombie = grc as Zombie;
-                if ((zombie != null) && (zombie != this.Zombie))
+                if ((zombie != null) && (zombie != this.Zombie) && (zombie.CurrentState != Zombie.ZombieState.Death))
                 {
-                    zombie.LP -= this.Damage;
+                    this.Damaging(zombie);
                 }
             }
+        }
+
+        public virtual void Damaging(Zombie zombie)
+        {
+            Impacts.Damaging impDamage = new Impacts.Damaging(this.Game, this.Damage);
+            zombie.AddImpact(impDamage);
         }
 
         public override void CheckingState()
@@ -88,6 +94,9 @@ namespace PlantsVsZombies.Zombies.States
             }
             else
             {
+                if (this.Zombie.Cell == null)
+                    return;
+
                 foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
                 {
                     Zombie zombie = grc as Zombie;

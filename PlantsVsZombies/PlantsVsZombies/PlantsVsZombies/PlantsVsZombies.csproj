@@ -75,6 +75,12 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Plants_Bullets\Grows\BuyList.cs" />
+    <Compile Include="Plants_Bullets\Grows\ChooseList.cs" />
+    <Compile Include="Plants_Bullets\Grows\GrowButton.cs" />
+    <Compile Include="Plants_Bullets\Grows\GrowManager.cs" />
+    <Compile Include="Plants_Bullets\Grows\IGrowable.cs" />
     <Compile Include="Counter\ICounter.cs" />
     <Compile Include="Counter\Timer.cs" />
     <Compile Include="Effect\Effect.cs" />
@@ -111,15 +117,28 @@
     <Compile Include="Plants_Bullets\Plant\WaterMush.cs" />
     <Compile Include="Zombies\Impacts\Cold.cs" />
     <Compile Include="Zombies\Impacts\Damaging.cs" />
-    <Compile Include="Zombies\Impacts\Impact.cs" />
+    <Compile Include="Zombies\Impacts\IZombieImpact.cs" />
     <Compile Include="Plants_Bullets\Bullets\Bullet.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletBomber.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletManager.cs" />
     <Compile Include="Plants_Bullets\Bullets\BulletShooter.cs" />
     <Compile Include="Plants_Bullets\Bullets\B_DPea.cs" />
     <Compile Include="Plants_Bullets\Bullets\B_Pea.cs" />
+    <Compile Include="Zombies\Managers\Waves\IdleWave.cs" />
+    <Compile Include="Zombies\Managers\Waves\LinearWave.cs" />
+    <Compile Include="Zombies\Managers\Waves\IZombieWave.cs" />
+    <Compile Include="Zombies\Managers\Waves\SpeedUpWave.cs" />
+    <Compile Include="Zombies\Managers\Waves\ZombieGenerator.cs" />
     <Compile Include="Zombies\Skeletons\BarrowWight.cs" />
+    <Compile Include="Zombies\Skeletons\BladeSkeleton.cs" />
+    <Compile Include="Zombies\Skeletons\BoneGolem.cs" />
     <Compile Include="Zombies\Skeletons\Skeleton.cs" />
+    <Compile Include="Zombies\Skeletons\SwordSkeleton.cs" />
+    <Compile Include="Zombies\Skeletons\Tattered.cs" />
+    <Compile Include="Zombies\Spiders\Drider.cs" />
+    <Compile Include="Zombies\Spiders\GiantSpider.cs" />
+    <Compile Include="Zombies\Spiders\Remorhaz.cs" />
+    <Compile Include="Zombies\Spiders\Spider.cs" />
     <Compile Include="Zombies\States\Attack.cs" />
     <Compile Include="Zombies\States\Death.cs" />
     <Compile Include="Zombies\States\Walk.cs" />
@@ -128,7 +147,16 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="LuongPvZ.cs" />
-    <Compile Include="Zombies\ZombiesManager.cs" />
+    <Compile Include="Zombies\Managers\ZombiesManager.cs" />
+    <Compile Include="Zombies\Zombies\Drowded.cs" />
+    <Compile Include="Zombies\Zombies\Ghoul.cs" />
+    <Compile Include="Zombies\Zombies\Histachii.cs" />
+    <Compile Include="Zombies\Zombies\Lemure.cs" />
+    <Compile Include="Zombies\Zombies\Mummy.cs" />
+    <Compile Include="Zombies\Zombies\Nameless.cs" />
+    <Compile Include="Zombies\Zombies\Nupperibo.cs" />
+    <Compile Include="Zombies\Zombies\Ravel.cs" />
+    <Compile Include="Zombies\Zombies\Vampire.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />
