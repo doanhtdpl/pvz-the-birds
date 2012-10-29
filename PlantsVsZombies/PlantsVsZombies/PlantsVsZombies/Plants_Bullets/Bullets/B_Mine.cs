@@ -14,18 +14,35 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 {
     public class B_Mine : BulletBomber
     {
+        protected Rectangle bound;
+
+        public override Rectangle Bound
+        {
+            get
+            {
+                return this.bound;
+            }
+        }
+
         public B_Mine(Game game, Vector2 position)
             : base(game, position)
         {
+            CalculateRange();
         }
 
         public override void Initialize()
         {
-            this.BName = "Images\\Plants\\B_Mine";
+            this.BName = "Images\\Plants\\B_Cherry";
             //this.B_Effect = @"Images\\Plants\\B_MineEffect";
-            this.animation = SpriteBank.GetAnimation(this.BName);
             this.damage = 500;
             base.Initialize();
+        }
+
+        protected void CalculateRange()
+        {
+            Animation ani = SpriteBank.GetAnimation(this.BName);
+            ani.Position = this.position;
+            animations.Add(ani);
         }
     }
 
@@ -40,8 +57,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         // Add Pea Bullet
         public override void AddBullet(Vector2 position)
         {
-            B_Mine b_pea = new B_Mine(this.Game, position);
-            this.Add(b_pea);
+            B_Mine b_mine = new B_Mine(this.Game, position);
+            this.Add(b_mine);
         }
     }
 }

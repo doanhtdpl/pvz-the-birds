@@ -15,7 +15,12 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class BulletBomber : Bullet
     {
         // Fields
-        protected Animation animation;
+        protected List<Animation> animations = new List<Animation>();
+
+        public override Rectangle Bound
+        {
+            get { return this.animations[0].Bound; }
+        }
 
         public BulletBomber(Game game, Vector2 position)
             : base(game, position)
@@ -24,24 +29,32 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.animation.Position = position;
+            this.PositionChanged = true;
+
             base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (animation.CurrentFrame == animation.Frames.Count - 1)
+            foreach (Animation ani in animations)
             {
-                this.isCollided = true;
+                if (ani.CurrentFrame == ani.Frames.Count - 1)
+                {
+                    this.isCollided = true;
+                    break;
+                }
+                ani.Update(gameTime);
             }
-            else 
-                animation.Update(gameTime);
+
             base.Update(gameTime);
         }
 
         public override void Draw(GameTime gameTime)
         {
-            animation.Draw(gameTime);
+            foreach (Animation ani in animations)
+            {
+                ani.Draw(gameTime);
+            }
             base.Draw(gameTime);
         }
     }

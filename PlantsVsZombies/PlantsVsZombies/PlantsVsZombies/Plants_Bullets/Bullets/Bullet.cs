@@ -15,7 +15,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     /// <summary>
     /// This is a game component that implements IUpdateable.
     /// </summary>
-    public class Bullet : DrawableGameComponent, Griding.IGridable
+    public abstract class Bullet : DrawableGameComponent, Griding.IGridable
     {
         #region Fields
 
@@ -41,6 +41,11 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         #region Properties
 
+        public abstract Rectangle Bound
+        {
+            get;
+        }
+
         public bool IsCollided
         {
             get { return this.isCollided; }
@@ -59,7 +64,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public Vector2 GridPosition
         {
-            get { return Vector2.Zero; }
+            get { return this.position; }
         }
 
         public bool PositionChanged { get; set; }

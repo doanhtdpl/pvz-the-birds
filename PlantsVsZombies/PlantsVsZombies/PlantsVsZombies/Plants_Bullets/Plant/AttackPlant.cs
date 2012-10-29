@@ -12,7 +12,7 @@ using GameBaseXNA;
 
 namespace PlantsVsZombies.Plants_Bullets.Plant
 {
-    public class AttackPlant : Plant
+    public abstract class AttackPlant : Plant
     {
         // Range to attack of Attack Plant, in box
         protected int range;
@@ -22,6 +22,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected Counter.Timer shootTimer;
         // Bullet Engine of Plant
         protected Bullets.BulletEngine bulletEngine;
+        // Position of bullet to fire
+        protected Vector2 bulletPosition;
 
         // Properties
         public int Range
@@ -41,10 +43,26 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             get { return this.bulletEngine; }
         }
 
-        // Constructor
-        public AttackPlant(Game game, PlantManager plantManager)
-            : base(game, plantManager)
+        public Vector2 Position
         {
+            get { return this.currentAnimation.Position; }
+            set
+            {
+                this.PositionChanged = true;
+                Griding.Cell cell = plantManager.GetGriding.IndexOf(value);
+                Vector2 pos = new Vector2(cell.Range.Left, cell.Range.Top);
+                this.currentAnimation.PositionX = pos.X;
+                this.currentAnimation.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
+                SetBulletPosition();
+                CalculateRange();
+            }
+        }
+
+        // Constructor
+        public AttackPlant(Game game, PlantManager plantManager, Vector2 position)
+            : base(game, plantManager, position)
+        {
+            this.AddToPlantManager();
         }
 
         public override void Initialize()
@@ -59,8 +77,11 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public override void Update(GameTime gameTime)
         {
             RangeDetect();
+            PlantOnState();
 
+            shootTimer.Update(gameTime);
             bulletEngine.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -68,30 +89,62 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Else, set it to stop then reset them
         protected virtual void RangeDetect()
         {
-            if(GMouse.MousePosition.X >= this.currentAnimation.Position.X &&
-                GMouse.MousePosition.X <= this.currentAnimation.Position.X + range * 60 &&
-                GMouse.MousePosition.Y >= this.currentAnimation.Position.Y &&
-                GMouse.MousePosition.Y <= this.currentAnimation.Position.Y + 60)
-            {
-                shootTimer.Start();
-                ChangeState(Plant.PlantState.ATTACK);
-            }
-            else
-            {
-                ChangeState(Plant.PlantState.NORMAL);
-                shootTimer.Stop();
-                shootTimer.Reset();
-            }
+        }
+
+        protected virtual void CalculateRange()
+        {
         }
 
         // The method do when time to shoot
         protected virtual void shootTimer_OnMeet(object o)
         {
-            shootTimer.Reset();
+            AddBullet();
+        }
+
+        protected void PlantOnState()
+        {
+            if(this.plantState == Plant.PlantState.ATTACK)
+                shootTimer.Start();
+            else if (this.plantState == Plant.PlantState.NORMAL)
+            {
+                shootTimer.Stop();
+                shootTimer.Reset();
+            }
+
         }
 
         protected override void SetAnimation()
         {
+        }
+
+        protected override void SetPosition()
+        {
+            this.PositionChanged = true;
+            Griding.Cell cell = plantManager.GetGriding.IndexOf(this.position);
+            Vector2 pos = new Vector2(cell.Range.Left, cell.Range.Top);
+            this.position = pos;
+            foreach (Animation ani in animations)
+            {
+                ani.PositionX = pos.X;
+                ani.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
+            }
+            SetBulletPosition();
+            CalculateRange();
+            CalculateCenter();
+        }
+
+        protected void AddBullet()
+        {
+            bulletEngine.AddBullet(this.bulletPosition);
+        }
+
+        protected abstract void SetBulletPosition();
+
+        protected override void CalculateCenter()
+        {
+            this.center.X = this.position.X + this.currentAnimation.Bound.Width / 2;
+            this.center.Y = this.position.Y + this.currentAnimation.Bound.Height;
+            base.CalculateCenter();
         }
     }
 }

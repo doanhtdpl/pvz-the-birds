@@ -29,15 +29,19 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         // List animation
         protected List<Animation> animations;
+        // Center of plant
+        protected Vector2 center;
         // Current Animation
         protected Animation currentAnimation;
         // Plant state
         protected PlantState plantState;
         // Variable report when plant is attacked by enemy
         protected bool isAttacked;
+        // Position
+        protected Vector2 position;
 
         // Health of plant
-        int health;
+        protected int health;
 
         // Reference to Plant Manager
         protected PlantManager plantManager;
@@ -46,38 +50,44 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         #region Properties
 
-        public bool IsAttacked
-        {
-            get { return this.isAttacked; }
-        }
+        public bool IsAttacked { get { return this.isAttacked; }  }
+
         public int Health
         {
             get { return this.health; }
             set { this.health = value; }
         }
 
-        public Vector2 GridPosition
+        public bool IsDead
         {
-            get { return Vector2.Zero; }
+            get 
+            {
+                if (this.plantState == PlantState.DIE)
+                    return true;
+                else
+                    return false;
+            }
         }
-        public bool PositionChanged
+
+        public Vector2 GridPosition { get  { return center;  }  }
+
+        public bool PositionChanged {  get; set; }
+
+        public Griding.Cell Cell {  get; set; }
+
+        public Rectangle Bound
         {
-            get;
-            set;
-        }
-        public Griding.Cell Cell
-        {
-            get;
-            set;
+            get { return this.currentAnimation.Bound; }
         }
 
         #endregion
 
         #region Constructor
-        public Plant(Game game, PlantManager plantManager)
+        public Plant(Game game, PlantManager plantManager, Vector2 position)
             : base(game)
         {
             this.plantManager = plantManager;
+            this.position = position;
             this.Initialize();
         }
         
@@ -87,13 +97,16 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             animations = new List<Animation>();
             plantState = PlantState.NORMAL;
             isAttacked = false;
+            health = 100;
 
             SetAnimation();
+            SetPosition();
             base.Initialize();
         }
 
         #endregion
 
+        #region Methods
         // Update the plant
         public override void Update(GameTime gameTime)
         {
@@ -148,5 +161,18 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         }
 
         protected abstract void SetAnimation();
+
+        protected abstract void SetPosition();
+
+        protected void AddToPlantManager()
+        {
+            this.plantManager.AddPlant(this);
+        }
+
+        protected virtual void CalculateCenter()
+        {
+        }
+
+        #endregion
     }
 }
