@@ -26,5 +26,16 @@ namespace PlantsVsZombies.Scenes
 
         }
         #endregion
+
+        #region Methods
+        public virtual void Return()
+        {
+            if (this.Caller != null)
+            {
+                this.HideScene();
+                this.Caller.ShowScene();
+            }
+        }
+        #endregion
     }
 }
