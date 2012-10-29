@@ -107,6 +107,7 @@ namespace PlantsVsZombies.Griding
                 {
                     Grid[i, j] = new Cell();
                     Grid[i, j].Index = new Vector2(i, j);
+                    Grid[i, j].Range = new Rectangle(this.range.X + j * cellWidth, this.range.Y + i * cellHeight, cellWidth, cellHeight);
                     Grid[i, j].Range = new Rectangle(j * cellWidth + this.range.X, i * cellHeight + this.range.Y, cellWidth, cellHeight);
                 }
             }
@@ -119,7 +120,7 @@ namespace PlantsVsZombies.Griding
         /// <returns>Cell contains position</returns>
         public virtual Cell IndexOf(Vector2 position)
         {
-            if (!GMath.IsContained(position, this.Range))
+            if ((this.Range.X > position.X) || (this.Range.Y > position.Y) || (this.Range.X + this.Range.Width <= position.X) || (this.Range.Y + this.Range.Height <= position.Y)) 
                 return null;
 
             return this.Grid[(int )(position.Y / cellHeight), (int) (position.X / cellWidth)];
@@ -149,24 +150,21 @@ namespace PlantsVsZombies.Griding
 
         public override void Update(GameTime gameTime)
         {
-            for (int i = 0; i < this.Components.Count;)
+            for (int i = 0; i < this.Components.Count; ++i)
             {
                 if (this.Components[i].PositionChanged)
                 {
                     Cell newCell = this.IndexOf(this.Components[i].GridPosition);
-                    if (newCell != null)
+                    if (newCell != this.Components[i].Cell)
                     {
-                        if (newCell != this.Components[i].Cell)
-                        {
+                        if (this.Components[i].Cell != null)
                             this.Components[i].Cell.Components.Remove(this.Components[i]);
-                            newCell.Components.Add(this.Components[i]);
-                            this.Components[i].Cell = newCell;
-                        }
 
-                        ++i;
+                        if (newCell != null)
+                            newCell.Components.Add(this.Components[i]);
+
+                        this.Components[i].Cell = newCell;
                     }
-                    else
-                        this.Components.RemoveAt(i);
                 }
                 else
                     ++i;
@@ -180,11 +178,10 @@ namespace PlantsVsZombies.Griding
             Cell cell = this.IndexOf(gr.GridPosition);
 
             if (cell != null)
-            {
-                this.Components.Add(gr);
                 cell.Components.Add(gr);
-                gr.Cell = cell;
-            }
+
+            this.Components.Add(gr);
+            gr.Cell = cell;
         }
 
         public virtual void Remove(IGridable gr)
