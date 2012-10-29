@@ -29,7 +29,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             : base(manager.Game)
         {
             this.Manager = manager;
-            this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\ListBuyPlant");
+            this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\BuyPlant");
             this.MaxItem = 8;
         }
         #endregion

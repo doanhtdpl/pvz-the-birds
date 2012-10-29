@@ -15,7 +15,7 @@ using PlantsVsZombies.Plants_Bullets.Plant;
 
 namespace PlantsVsZombies.Plants_Bullets.Grows
 {
-    public class GrowManager : GameComponent
+    public class GrowManager : DrawableGameComponent
     {
         #region Sub-types
         #endregion
@@ -74,6 +74,22 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
                     this.Manager.AddPlant(plant);
                 }
             }
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            this.ChooseList.Update(gameTime);
+            this.BuyList.Update(gameTime);
+
+            base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            this.ChooseList.Draw(gameTime);
+            this.BuyList.Draw(gameTime);
+
+            base.Draw(gameTime);
         }
         #endregion
     }
