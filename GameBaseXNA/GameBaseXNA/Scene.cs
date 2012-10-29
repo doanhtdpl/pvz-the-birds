@@ -32,8 +32,8 @@ namespace GameBaseXNA
         /// </summary>
         /// <param name="game">Provides a snapshot of timing values</param>
         /// <param name="managerScene">Scene Manager</param>
-        public Scene(Game game, SceneManager managerScene)
-            : base(game)
+        public Scene(SceneManager managerScene)
+            : base(managerScene.Game)
         {
             this.components = new List<GameComponent>();
             this.SceneManager = managerScene;
