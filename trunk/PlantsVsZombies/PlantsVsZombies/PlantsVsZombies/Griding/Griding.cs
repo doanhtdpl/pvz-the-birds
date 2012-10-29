@@ -107,7 +107,7 @@ namespace PlantsVsZombies.Griding
                 {
                     Grid[i, j] = new Cell();
                     Grid[i, j].Index = new Vector2(i, j);
-                    Grid[i, j].Range = new Rectangle(j * cellWidth, i * cellHeight, cellWidth, cellHeight);
+                    Grid[i, j].Range = new Rectangle(j * cellWidth + this.range.X, i * cellHeight + this.range.Y, cellWidth, cellHeight);
                 }
             }
         }
@@ -168,6 +168,8 @@ namespace PlantsVsZombies.Griding
                     else
                         this.Components.RemoveAt(i);
                 }
+                else
+                    ++i;
             }
 
             base.Update(gameTime);

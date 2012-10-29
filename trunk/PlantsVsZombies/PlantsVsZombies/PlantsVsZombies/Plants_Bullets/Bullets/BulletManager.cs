@@ -16,7 +16,14 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class BulletManager : DrawableGameComponent
     {
         // Fields
-        List<Bullet> bullets;
+        protected List<Bullet> bullets;
+        protected Griding.Griding griding;
+
+        public Griding.Griding Griding
+        {
+            get { return this.griding; }
+            set { this.griding = value; }
+        }
 
         public BulletManager(Game game)
             : base(game)
@@ -54,6 +61,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         public bool AddBullet(Bullet bullet)
         {
             bullets.Add((Bullet)bullet);
+            griding.Add(bullet);
             return true;
         }
 

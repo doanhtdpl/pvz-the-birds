@@ -18,6 +18,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected Bullets.BulletManager bulletManager;
         // Reference to griding in game
         protected Griding.Griding griding;
+        // Reference to sunManager
+        protected SunManager sunManager;
 
         // List Plant
         protected List<Plant> plants;
@@ -31,13 +33,20 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             get { return this.griding; }
         }
+        public SunManager GetSunManager
+        {
+            get { return this.sunManager; }
+        }
 
         // Constructor
-        public PlantManager(Game game, Bullets.BulletManager bulletManager, Griding.Griding griding)
+        public PlantManager(Game game, Bullets.BulletManager bulletManager, Griding.Griding griding, SunManager sunManager)
             : base(game)
         {
             this.bulletManager = bulletManager;
             this.griding = griding;
+            this.sunManager = sunManager;
+
+            bulletManager.Griding = griding;
 
             this.Initialize();
         }
@@ -56,6 +65,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             {
                 plant.Update(gameTime);
             }
+            DiedPlantDetect();
             base.Update(gameTime);
         }
 
@@ -63,7 +73,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public override void Draw(GameTime gameTime)
         {
             List<Plant> plantsCopy = new List<Plant>(plants);
-            foreach (Plant plant in plantsCopy)
+            foreach (Plants_Bullets.Plant.Plant plant in plantsCopy)
             {
                 plant.Draw(gameTime);
             }
@@ -80,13 +90,16 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Detect plant is died and remove it from plant list 
         public void DiedPlantDetect()
         {
-            foreach (Plant plant in plants)
+            if(plants.Count != 0)
             {
-                if (plant.Health <= 0)
+                for (int i = 0; i < plants.Count; ++i)
                 {
-                    // Plant is dead, remove from list
-                    this.plants.Remove(plant);
-                    this.griding.Remove(plant);
+                    if (plants[i].IsDead || plants[i].Health <= 0)
+                    {
+                        griding.Remove(plants[i]);
+                        plants.Remove(plants[i]);
+                        --i;
+                    }
                 }
             }
         }

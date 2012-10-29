@@ -21,8 +21,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = @"Images\\B_FreeMush";
-            this.B_Effect = @"Images\\B_FreeMushEffect";
+            this.BName = "Images\\Plants\\B_FreeMush";
+            //this.B_Effect = "Images\\B_FreeMushEffect";
             this.sprite = SpriteBank.GetSprite(BName);
             this.damage = 50;
             base.Initialize();

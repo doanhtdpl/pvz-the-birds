@@ -26,6 +26,11 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             set { this.sprite = value; }
         }
 
+        public override Rectangle Bound
+        {
+            get { return this.sprite.Bound; }
+        }
+
         public Vector2 Velocity
         {
             get { return this.velocity; }
@@ -35,7 +40,11 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         public Vector2 Position
         {
             get { return this.sprite.Position; }
-            set { this.sprite.Position = value; }
+            set 
+            {
+                this.sprite.Position = value;
+                this.PositionChanged = true;
+            }
         }
 
         // Constructor
@@ -60,6 +69,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         protected virtual void Move()
         {
             this.sprite.Position += velocity;
+            this.PositionChanged = true;
         }
 
         public override void Draw(GameTime gameTime)

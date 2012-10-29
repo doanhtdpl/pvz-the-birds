@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -12,25 +12,30 @@ using GameBaseXNA;
 
 namespace PlantsVsZombies.Plants_Bullets.Plant
 {
-    public class Pea : AttackPlant
+    public class DPea : AttackPlant
     {
-        public Pea(Game game, PlantManager plantManager, Vector2 position)
+        public DPea(Game game, PlantManager plantManager, Vector2 position)
             : base(game, plantManager, position)
         {
         }
 
         public override void Initialize()
         {
-            this.bulletEngine = new Bullets.B_PeaEngine(this.Game, plantManager.GetBulletManager);
+            this.bulletEngine = new Bullets.B_DPeaEngine(this.Game, plantManager.GetBulletManager);
             this.ShootDelay = 2000;
             this.Range = 9;
 
             base.Initialize();
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
         protected override void SetAnimation()
         {
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Pea"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\DPea"));
             this.currentAnimation = this.animations[0];
             base.SetAnimation();
         }
