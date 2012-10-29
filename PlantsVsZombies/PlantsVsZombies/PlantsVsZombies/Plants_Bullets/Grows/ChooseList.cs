@@ -26,7 +26,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             : base(manager.Game)
         {
             this.Manager = manager;
-            this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\ListChoosePlant");
+            this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\ChoosePlants");
         }
         #endregion
 

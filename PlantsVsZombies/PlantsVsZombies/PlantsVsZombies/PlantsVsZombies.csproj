@@ -124,7 +124,8 @@
     <Compile Include="Plants_Bullets\Plant\SunManager.cs" />
     <Compile Include="Plants_Bullets\Plant\SupportPlant.cs" />
     <Compile Include="Plants_Bullets\Plant\WaterMush.cs" />
-    <Compile Include="Scenes\GameScene.cs" />
+    <Compile Include="Scenes\GameScenes\GameScene.cs" />
+    <Compile Include="Scenes\GameScenes\Hospital\Hospital_ZombiesGenerator.cs" />
     <Compile Include="Scenes\ReturnalbeScene.cs" />
     <Compile Include="Zombies\Impacts\Cold.cs" />
     <Compile Include="Zombies\Impacts\Damaging.cs" />

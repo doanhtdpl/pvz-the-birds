@@ -19,6 +19,10 @@ namespace PlantsVsZombies.Zombies.Managers
         protected List<Zombie> Zombies { get; set; }
 
         public Griding.Griding Grid { get; set; }
+
+        public Waves.ZombieGenerator Generator { get; set; }
+
+        public bool IsCompleted { get { return ((this.Zombies.Count <= 0) && (this.Generator.IsCompleted)); } }
         #endregion
 
         #region Constructors
