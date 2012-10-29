@@ -35,7 +35,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         #endregion
 
         #region Methods
-        public virtual bool AddGrowButton(GrowButton grButton)
+        public virtual bool AddGrowButton(GrowButtons.GrowButton grButton)
         {
             if (this.listControl.Count >= MaxItem)
                 return false;
@@ -49,13 +49,13 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
 
         public virtual void GrowButtonClickWhenChoosing(object sender, EventArgs e)
         {
-            if (this.Manager.ChooseList.Add((GrowButton)sender))
+            if (this.Manager.ChooseList.Add((GrowButtons.GrowButton)sender))
             {
-                this.RemoveControl((GrowButton)sender);
+                this.RemoveControl((GrowButtons.GrowButton)sender);
             }
         }
 
-        public virtual void RemoveGrowButton(GrowButton grButton)
+        public virtual void RemoveGrowButton(GrowButtons.GrowButton grButton)
         {
             this.RemoveControl(grButton);
             grButton.Clicked -= new EventHandler(this.GrowButtonClickWhenChoosing);
@@ -63,7 +63,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
 
         public virtual void GrowButtonClickWhenPlaying(object sender, EventArgs e)
         {
-            GrowButton grButton = sender as GrowButton;
+            GrowButtons.GrowButton grButton = sender as GrowButtons.GrowButton;
             if ((grButton != null) && grButton.CanBuy)
                 this.Manager.Buy(grButton);
         }
@@ -72,7 +72,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         {
             foreach (Control control in this.listControl)
             {
-                GrowButton grButton = control as GrowButton;
+                GrowButtons.GrowButton grButton = control as GrowButtons.GrowButton;
                 if (grButton != null)
                 {
                     grButton.Clicked -= new EventHandler(this.GrowButtonClickWhenChoosing);

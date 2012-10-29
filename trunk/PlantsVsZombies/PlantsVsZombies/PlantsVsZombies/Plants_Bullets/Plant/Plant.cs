@@ -69,6 +69,18 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             }
         }
 
+        // Position changed
+        public Vector2 Position
+        {
+            get { return this.currentAnimation.Position; }
+            set
+            {
+                this.PositionChanged = true;
+                this.position = value;
+                this.SetPosition();
+            }
+        }
+
         public Vector2 GridPosition { get  { return center;  }  }
 
         public bool PositionChanged {  get; set; }
@@ -148,16 +160,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Detect the collision between plant and enemy
         public virtual void CollisionDetect()
         {
-            // Just for test
-            if (GMouse.MousePosition.X >= currentAnimation.Bound.Left &&
-                GMouse.MousePosition.X <= currentAnimation.Bound.Right &&
-                GMouse.MousePosition.Y <= currentAnimation.Bound.Bottom &&
-                GMouse.MousePosition.Y >= currentAnimation.Bound.Top)
-            {
-                this.isAttacked = true;
-            }
-            else
-                this.isAttacked = false;
+            this.isAttacked = false;
         }
 
         protected abstract void SetAnimation();

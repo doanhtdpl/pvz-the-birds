@@ -22,8 +22,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = @"Images\\Plants\\B_Pea";
-            this.B_Effect = @"Images\\Plants\\B_PeaEffect";
+            this.BName = @"Images\\Bullets\\B_Pea";
+            this.B_Effect = @"Images\\Bullets\\B_PeaEffect";
             this.BSprite = SpriteBank.GetSprite(this.BName);
             this.damage = 100;
             base.Initialize();
@@ -33,7 +33,6 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     public class B_PeaEngine : BulletEngine
     {
         // Fields
-        protected BulletManager bulletManager;
 
         // Methods
         public B_PeaEngine(Game game, BulletManager bulletManager)

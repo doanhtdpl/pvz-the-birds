@@ -43,21 +43,6 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             get { return this.bulletEngine; }
         }
 
-        public Vector2 Position
-        {
-            get { return this.currentAnimation.Position; }
-            set
-            {
-                this.PositionChanged = true;
-                Griding.Cell cell = plantManager.GetGriding.IndexOf(value);
-                Vector2 pos = new Vector2(cell.Range.Left, cell.Range.Top);
-                this.currentAnimation.PositionX = pos.X;
-                this.currentAnimation.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
-                SetBulletPosition();
-                CalculateRange();
-            }
-        }
-
         // Constructor
         public AttackPlant(Game game, PlantManager plantManager, Vector2 position)
             : base(game, plantManager, position)
@@ -76,7 +61,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Update allow check RangeDetect
         public override void Update(GameTime gameTime)
         {
-            RangeDetect();
+            AttackDetect();
             PlantOnState();
 
             shootTimer.Update(gameTime);
@@ -87,30 +72,46 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         // If it detect the enemy in range, set shootTimer to start
         // Else, set it to stop then reset them
-        protected virtual void RangeDetect()
+        protected virtual void AttackDetect()
         {
-        }
+            this.ChangeState(PlantState.NORMAL);
 
-        protected virtual void CalculateRange()
-        {
+            if (this.health <= 0)
+            {
+                this.ChangeState(PlantState.DIE);
+                return;
+            }
+
+            if (this.Cell != null)
+            {
+                Griding.Cell[] line = this.Cell.Line;
+                for (int i = (int)this.Cell.Index.X; i < line.Length; ++i)
+                {
+                    foreach (Griding.IGridable grc in line[i].Components)
+                    {
+                        if (grc is Zombies.Zombie)
+                        {
+                            this.ChangeState(PlantState.ATTACK);
+                            return;
+                        }
+                    }
+                }
+            }
         }
 
         // The method do when time to shoot
         protected virtual void shootTimer_OnMeet(object o)
         {
             AddBullet();
+            shootTimer.Stop();
         }
 
         protected void PlantOnState()
         {
-            if(this.plantState == Plant.PlantState.ATTACK)
-                shootTimer.Start();
-            else if (this.plantState == Plant.PlantState.NORMAL)
+            if (this.plantState == Plant.PlantState.ATTACK)
             {
-                shootTimer.Stop();
-                shootTimer.Reset();
+                shootTimer.Start();
             }
-
         }
 
         protected override void SetAnimation()
@@ -128,9 +129,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
                 ani.PositionX = pos.X;
                 ani.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
             }
-            SetBulletPosition();
-            CalculateRange();
             CalculateCenter();
+            SetBulletPosition();
         }
 
         protected void AddBullet()

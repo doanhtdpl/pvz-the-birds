@@ -32,7 +32,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = "Images\\Plants\\B_Cherry";
+            this.BName = "Images\\Bullets\\B_Cherry";
             //this.B_Effect = @"Images\\Plants\\B_MineEffect";
             this.damage = 500;
             base.Initialize();
@@ -43,6 +43,14 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             Animation ani = SpriteBank.GetAnimation(this.BName);
             ani.Position = this.position;
             animations.Add(ani);
+        }
+
+        protected override void CollisionDetect()
+        {
+            if (this.Cell == null)
+                return;
+
+            this.CollisionDetectOnCell(this.Cell);
         }
     }
 

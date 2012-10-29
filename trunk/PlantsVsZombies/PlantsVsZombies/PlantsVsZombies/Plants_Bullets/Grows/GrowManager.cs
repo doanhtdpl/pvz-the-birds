@@ -26,9 +26,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         public ChooseList ChooseList { get; set; }
         public BuyList BuyList { get; set; }
 
-        public ISunManager SunManager { get; set; }
-
-        protected GrowButton waitedButton = null;
+        protected GrowButtons.GrowButton waitedButton = null;
         #endregion
 
         #region Constructors
@@ -42,7 +40,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         #endregion
 
         #region Methods
-        public void Buy(GrowButton grButton)
+        public void Buy(GrowButtons.GrowButton grButton)
         {
             this.waitedButton = grButton;
             if (this.waitedButton != null)
@@ -57,7 +55,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
                 return;
 
             this.waitedButton.StopWait();
-            GrowButton grButton = this.waitedButton;
+            GrowButtons.GrowButton grButton = this.waitedButton;
             this.waitedButton = null;
 
             Griding.Cell cell = this.Manager.GetGriding.IndexOf(position);
@@ -72,7 +70,8 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
                 Plant.Plant plant = grButton.Buy();
                 if (plant != null)
                 {
-                    //Add plant to plant manager:
+                    plant.Position = position;
+                    this.Manager.AddPlant(plant);
                 }
             }
         }

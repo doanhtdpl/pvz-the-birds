@@ -98,11 +98,26 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         // Detect the collision of bullet with enemy
         protected virtual void CollisionDetect()
         {
+            if (this.Cell == null)
+                return;
+
+            foreach (Griding.IGridable grc in this.Cell.Components)
+            {
+                Zombies.Zombie zombie = grc as Zombies.Zombie;
+                if (zombie != null)
+                {
+                    if (this.Bound.Intersects(zombie.CurrentZombieState.Image.Bound))
+                        this.Collided(zombie);
+                }
+            }
         }
 
         // Do something when collision happened
-        protected virtual void Collided()
+        protected virtual void Collided(Zombies.Zombie zombie)
         {
+            this.isCollided = true;
+            Zombies.Impacts.Damaging dam = new Zombies.Impacts.Damaging(this.Game, this.damage);
+            zombie.AddImpact(dam);
         }
 
         // Allow it auto remove itself

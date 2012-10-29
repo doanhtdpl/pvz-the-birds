@@ -33,7 +33,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = "Images\\Plants\\B_Cherry";
+            this.BName = "Images\\Bullets\\B_Cherry";
             //this.B_Effect = @"Images\\Plants\\B_CherryEffect";
             this.damage = 500;
             base.Initialize();
@@ -123,6 +123,64 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
                 Animation aniRightBot = SpriteBank.GetAnimation(this.BName);
                 aniRightBot.Position = new Vector2(right.X, bottom.Y);
                 animations.Add(aniRightBot);
+            }
+        }
+
+        protected override void CollisionDetect()
+        {
+            if (this.Cell == null)
+                return;
+
+            this.CollisionDetectOnCell(this.Cell);
+            
+            //Detect left
+            if (this.Cell.Index.X > 0)
+            {
+                //Left - left
+                this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X - 1, (int)this.Cell.Index.Y]);
+
+                //Left - top
+                if (this.Cell.Index.Y > 0)
+                {
+                    this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X - 1, (int)this.Cell.Index.Y - 1]);
+                }
+
+                //Left - bottom
+                if (this.Cell.Index.Y < this.Cell.Grid.NumberOfRows - 1)
+                {
+                    this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X - 1, (int)this.Cell.Index.Y + 1]);
+                }
+            }
+
+            //Detect right
+            if (this.Cell.Index.X < this.Cell.Grid.NumberOfColumns - 1)
+            {
+                //Right - right
+                this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X + 1, (int)this.Cell.Index.Y]);
+
+                //Right - top
+                if (this.Cell.Index.Y > 0)
+                {
+                    this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X + 1, (int)this.Cell.Index.Y - 1]);
+                }
+
+                //Right - bottom
+                if (this.Cell.Index.Y < this.Cell.Grid.NumberOfRows - 1)
+                {
+                    this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X + 1, (int)this.Cell.Index.Y + 1]);
+                }
+            }
+
+            //Detect top
+            if (this.Cell.Index.Y > 0)
+            {
+                this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X, (int)this.Cell.Index.Y - 1]);
+            }
+
+            //Detect bottom
+            if (this.Cell.Index.Y < this.Cell.Grid.NumberOfRows - 1)
+            {
+                this.CollisionDetectOnCell(this.Cell.Grid.Grid[(int)this.Cell.Index.X, (int)this.Cell.Index.Y + 1]);
             }
         }
     }

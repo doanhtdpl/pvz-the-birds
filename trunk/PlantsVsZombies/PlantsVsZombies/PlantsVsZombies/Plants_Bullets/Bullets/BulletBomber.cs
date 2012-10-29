@@ -57,5 +57,17 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             }
             base.Draw(gameTime);
         }
+
+        protected virtual void CollisionDetectOnCell(Griding.Cell cell)
+        {
+            foreach (Griding.IGridable grc in cell.Components)
+            {
+                Zombies.Zombie zombie = grc as Zombies.Zombie;
+                if (zombie != null)
+                {
+                    this.Collided(zombie);
+                }
+            }
+        }
     }
 }

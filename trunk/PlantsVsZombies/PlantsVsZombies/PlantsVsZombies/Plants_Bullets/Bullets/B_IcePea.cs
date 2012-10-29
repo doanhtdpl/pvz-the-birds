@@ -32,20 +32,27 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = @"Images\\Plants\\B_IcePea";
-            this.B_Effect = @"Images\\Plants\\B_IcePeaEffect";
+            this.BName = @"Images\\Bullets\\B_IcePea";
+            this.B_Effect = @"Images\\Bullets\\B_IcePeaEffect";
 
             this.BSprite = SpriteBank.GetSprite(BName);
             this.damage = 100;
             this.slowDown = 0.5f;
             base.Initialize();
         }
+
+        protected override void Collided(Zombies.Zombie zombie)
+        {
+            Zombies.Impacts.Cold cold = new Zombies.Impacts.Cold(this.Game, 3000, this.slowDown);
+            zombie.AddImpact(cold);
+
+            base.Collided(zombie);
+        }
     }
 
     public class B_IcePeaEngine : BulletEngine
     {
         // Fields
-        protected BulletManager bulletManager;
 
         // Methods
         public B_IcePeaEngine(Game game, BulletManager bulletManager)

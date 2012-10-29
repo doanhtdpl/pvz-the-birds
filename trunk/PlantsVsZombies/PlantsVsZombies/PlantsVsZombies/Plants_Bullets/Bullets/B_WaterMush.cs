@@ -22,8 +22,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = @"Images\\Plants\\B_WaterMush";
-            this.B_Effect = @"Images\\Plants\\B_WaterMushEffect";
+            this.BName = @"Images\\Bullets\\B_WaterMush";
+            this.B_Effect = @"Images\\Bullets\\B_WaterMushEffect";
             this.BSprite = SpriteBank.GetSprite(this.BName);
             this.damage = 50;
             base.Initialize();

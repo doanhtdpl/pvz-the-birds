@@ -41,7 +41,7 @@ namespace PlantsVsZombies.Griding
                 Cell[] line = new Cell[this.Grid.NumberOfColumns];
                 for (int i = 0; i < this.Grid.NumberOfColumns; ++i)
                 {
-                    line[i] = this.Grid.Grid[(int) this.Index.Y, i];
+                    line[i] = this.Grid.Grid[(int) this.Index.X, i];
                 }
 
                 return line;
@@ -55,14 +55,14 @@ namespace PlantsVsZombies.Griding
                 Cell[] columns = new Cell[this.Grid.NumberOfColumns];
                 for (int i = 0; i < this.Grid.NumberOfColumns; ++i)
                 {
-                    columns[i] = this.Grid.Grid[i, (int)this.Index.X];
+                    columns[i] = this.Grid.Grid[i, (int)this.Index.Y];
                 }
 
                 return columns;
             }
         }
 
-        protected Griding Grid { get; set; }
+        public Griding Grid { get; set; }
         #endregion
 
         #region Properties

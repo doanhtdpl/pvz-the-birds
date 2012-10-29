@@ -35,35 +35,9 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected override void SetAnimation()
         {
-            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\DPea"));
+            this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\DoublePea"));
             this.currentAnimation = this.animations[0];
             base.SetAnimation();
-        }
-
-        protected override void RangeDetect()
-        {
-            if (GMouse.MousePosition.X >= this.currentAnimation.Position.X &&
-                GMouse.MousePosition.X <= range &&
-                GMouse.MousePosition.Y >= this.currentAnimation.Position.Y &&
-                GMouse.MousePosition.Y <= this.currentAnimation.Position.Y + plantManager.GetGriding.CellHeight)
-            {
-                ChangeState(Plant.PlantState.ATTACK);
-            }
-            else if (this.health == 0)
-            {
-                ChangeState(Plant.PlantState.DIE);
-            }
-            else
-            {
-                ChangeState(Plant.PlantState.NORMAL);
-            }
-        }
-
-        protected override void CalculateRange()
-        {
-            Griding.Cell cell = plantManager.GetGriding.IndexOf(Position);
-            range = (plantManager.GetGriding.NumberOfColumns - (int)cell.Index.Y) * plantManager.GetGriding.CellWidth;
-            base.CalculateRange();
         }
 
         protected override void SetBulletPosition()
@@ -73,10 +47,9 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             this.bulletPosition.Y = this.currentAnimation.PositionY + 1f / 4 * (float)this.currentAnimation.SizeY;
         }
 
-        protected new void shootTimer_OnMeet(object o)
+        protected override void shootTimer_OnMeet(object o)
         {
-            ChangeState(Plant.PlantState.DIE);
-            shootTimer.Reset();
+            shootTimer.Stop();
 
             base.shootTimer_OnMeet(o);
         }
