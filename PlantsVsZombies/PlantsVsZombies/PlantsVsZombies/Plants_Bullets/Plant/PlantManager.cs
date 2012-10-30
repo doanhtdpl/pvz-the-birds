@@ -14,11 +14,11 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 {
     public class PlantManager : DrawableGameComponent
     {
-        // Reference to bulletManager in game
+        // Bullet manager all bullet in game
         protected Bullets.BulletManager bulletManager;
         // Reference to griding in game
         protected Griding.Griding griding;
-        // Reference to sunManager
+        // Sun Manager all sun in game
         protected SunManager sunManager;
 
         // List Plant
@@ -39,12 +39,13 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         }
 
         // Constructor
-        public PlantManager(Game game, Bullets.BulletManager bulletManager, Griding.Griding griding, SunManager sunManager)
+        public PlantManager(Game game, Griding.Griding griding)
             : base(game)
         {
-            this.bulletManager = bulletManager;
+            this.bulletManager = new Bullets.BulletManager(game);
             this.griding = griding;
-            this.sunManager = sunManager;
+            this.sunManager = new SunManager(game);
+            this.sunManager.SetGriding = griding;
 
             bulletManager.Griding = griding;
 
@@ -60,23 +61,39 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Update all plant of plant list
         public override void Update(GameTime gameTime)
         {
+            // Update all bullet
+            bulletManager.Update(gameTime);
+            // Update all sun
+            sunManager.Update(gameTime);
+
+            // Update all plan
             List<Plant> plantsCopy = new List<Plant>(plants);
             foreach (Plant plant in plantsCopy)
             {
                 plant.Update(gameTime);
             }
+
+            // Check for dead plant
             DiedPlantDetect();
+
             base.Update(gameTime);
         }
 
         // Draw all plant of plant list
         public override void Draw(GameTime gameTime)
         {
+            // Draw all bullet in game
+            bulletManager.Draw(gameTime);
+            // Draw all sun in game
+            sunManager.Draw(gameTime);
+
+            // Draw all plant
             List<Plant> plantsCopy = new List<Plant>(plants);
             foreach (Plants_Bullets.Plant.Plant plant in plantsCopy)
             {
                 plant.Draw(gameTime);
             }
+
             base.Draw(gameTime);
         }
 

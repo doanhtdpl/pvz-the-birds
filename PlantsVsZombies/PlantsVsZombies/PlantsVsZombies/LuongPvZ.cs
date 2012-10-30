@@ -26,7 +26,6 @@ namespace PlantsVsZombies
         Counter.Timer timer;
         Zombies.Managers.ZombiesManager ZMan;
         Griding.Griding grid;
-
         SpriteFont tahoma;
 
         public LuongPvZ()

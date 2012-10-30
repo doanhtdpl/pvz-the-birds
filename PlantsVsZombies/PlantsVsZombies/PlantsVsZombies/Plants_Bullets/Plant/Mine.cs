@@ -39,15 +39,15 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected void growUpTimer_OnMeet(Counter.ICounter counter)
         {
-            this.currentAnimation.Enable = true;
+            this.CurrentAnimation.Enable = true;
             growUpTimer.Stop();
         }
 
         public override void Update(GameTime gameTime)
         {
-            if (currentAnimation.CurrentFrame == currentAnimation.Frames.Count - 1)
+            if (CurrentAnimation.CurrentFrame == CurrentAnimation.Frames.Count - 1)
             {
-                this.currentAnimation = animations[1];
+                this.CurrentAnimation = animations[1];
             }
             growUpTimer.Update(gameTime);
             base.Update(gameTime);
@@ -57,8 +57,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\MineGrow"));
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Mine"));
-            this.currentAnimation = this.animations[0];
-            this.currentAnimation.Enable = false;
+            this.CurrentAnimation = this.animations[0];
+            this.CurrentAnimation.Enable = false;
             this.growUpTimer.Start();
             base.SetAnimation();
         }
@@ -67,7 +67,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             this.ChangeState(PlantState.NORMAL);
 
-            if ((this.currentAnimation == this.animations[1]) && this.Cell != null)
+            if ((this.CurrentAnimation == this.animations[1]) && this.Cell != null)
             {
                 foreach (Griding.IGridable grc in this.Cell.Components)
                 {
@@ -83,7 +83,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetBulletPosition()
         {
             // Bullet position
-            Griding.Cell cell = plantManager.GetGriding.IndexOf(currentAnimation.Position);
+            Griding.Cell cell = plantManager.GetGriding.IndexOf(CurrentAnimation.Position);
             this.bulletPosition.X = cell.Range.X;
             this.bulletPosition.Y = cell.Range.Y;
         }

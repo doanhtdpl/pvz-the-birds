@@ -34,7 +34,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected override void AttackDetect()
         {
-            if (currentAnimation.CurrentFrame == currentAnimation.Frames.Count - 1)
+            if (CurrentAnimation.CurrentFrame == CurrentAnimation.Frames.Count - 1)
             {
                 ChangeState(Plant.PlantState.ATTACK);
             }
@@ -43,14 +43,14 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetAnimation()
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Chilly"));
-            this.currentAnimation = this.animations[0];
+            this.CurrentAnimation = this.animations[0];
             base.SetAnimation();
         }
 
         protected override void SetBulletPosition()
         {
             // Bullet position
-            Griding.Cell cell = plantManager.GetGriding.IndexOf(currentAnimation.Position);
+            Griding.Cell cell = plantManager.GetGriding.IndexOf(CurrentAnimation.Position);
             this.bulletPosition.X = cell.Range.X;
             this.bulletPosition.Y = cell.Range.Y;
         }

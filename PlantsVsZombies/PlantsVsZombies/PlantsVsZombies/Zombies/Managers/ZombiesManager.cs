@@ -57,6 +57,8 @@ namespace PlantsVsZombies.Zombies.Managers
                 }
             }
 
+            this.Generator.Update(gameTime);
+
             base.Update(gameTime);
         }
 
@@ -78,7 +80,7 @@ namespace PlantsVsZombies.Zombies.Managers
 
         public virtual void Add(Zombie zombie, int line)
         {
-            zombie.Position = new Vector2(GRandom.RandomFloat(0, 792), Grid.Grid[line, 0].Range.Bottom - 1);
+            zombie.Position = new Vector2(this.Grid.Range.Right, Grid.Grid[line, 0].Range.Bottom - 1);
             this.Zombies.Add(zombie);
             this.Grid.Add(zombie);
         }

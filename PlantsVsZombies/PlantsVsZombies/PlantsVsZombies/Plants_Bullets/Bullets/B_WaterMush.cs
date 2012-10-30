@@ -25,7 +25,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             this.BName = @"Images\\Bullets\\B_WaterMush";
             this.B_Effect = @"Images\\Bullets\\B_WaterMushEffect";
             this.BSprite = SpriteBank.GetSprite(this.BName);
-            this.damage = 50;
+            this.damage = 10;
             base.Initialize();
         }
     }

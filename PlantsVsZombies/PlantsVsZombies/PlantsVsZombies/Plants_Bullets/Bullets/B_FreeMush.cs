@@ -24,7 +24,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             this.BName = "Images\\Bullets\\B_FreeMush";
             //this.B_Effect = "Images\\B_FreeMushEffect";
             this.sprite = SpriteBank.GetSprite(BName);
-            this.damage = 50;
+            this.damage = 10;
             base.Initialize();
         }
 

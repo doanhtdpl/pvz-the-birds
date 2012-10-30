@@ -70,7 +70,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             List<Bullet> bulletsCopy = new List<Bullet>(bullets);
             foreach (Bullet bullet in bulletsCopy)
             {
-                if (bullet.IsCollided)
+                if (bullet.IsCollided || bullet.Cell == null)
                 {
                     this.bullets.Remove(bullet);
                 }

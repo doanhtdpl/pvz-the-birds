@@ -101,13 +101,17 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             if (this.Cell == null)
                 return;
 
-            foreach (Griding.IGridable grc in this.Cell.Components)
+            Griding.Cell[] line = this.Cell.Line;
+            foreach (Griding.Cell cell in line)
             {
-                Zombies.Zombie zombie = grc as Zombies.Zombie;
-                if (zombie != null)
+                foreach (Griding.IGridable grc in cell.Components)
                 {
-                    if (this.Bound.Intersects(zombie.CurrentZombieState.Image.Bound))
-                        this.Collided(zombie);
+                    Zombies.Zombie zombie = grc as Zombies.Zombie;
+                    if (zombie != null)
+                    {
+                        if (this.Bound.Intersects(zombie.CurrentZombieState.Image.Bound))
+                            this.Collided(zombie);
+                    }
                 }
             }
         }

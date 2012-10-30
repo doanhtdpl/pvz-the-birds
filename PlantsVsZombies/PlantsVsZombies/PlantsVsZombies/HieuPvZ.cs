@@ -20,21 +20,8 @@ namespace PlantsVsZombies
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+
         SpriteFont font;
-
-        Plants_Bullets.Bullets.BulletManager bulletManager;
-        Plants_Bullets.Plant.PlantManager plantManager;
-        Zombies.Managers.ZombiesManager ZMan;
-        Griding.Griding griding;
-
-        Sprite background;
-
-        // Plants
-//        Plants_Bullets.Plant.SunFlower sunflower;
-        Plants_Bullets.Plant.Pea pea;
-
-        // Sun Manager
-        Plants_Bullets.Plant.SunManager sunManager;
 
         public HieuPvZ()
         {
@@ -67,32 +54,8 @@ namespace PlantsVsZombies
             spriteBatch = new SpriteBatch(GraphicsDevice);
             this.Services.AddService(typeof(SpriteBatch), spriteBatch);
 
-            font = Content.Load<SpriteFont>("font");
-
-            background = SpriteBank.GetSprite("Images\\Background");
-            background.Position = new Vector2(10f, 10f);
-            Components.Add(background);
-
-            // Initialize game content
-            bulletManager = new Plants_Bullets.Bullets.BulletManager(this);
-            Components.Add(bulletManager);
-
-            // Griding
-            griding = new Griding.Griding(this, new Rectangle(10, 10, 771, 420),
-                                            5, 9);
-            Components.Add(griding);
-
-            // Init sun manager
-            sunManager = new Plants_Bullets.Plant.SunManager(this);
-            sunManager.SetGriding = griding;
-
-            // Plant Manager
-            plantManager = new Plants_Bullets.Plant.PlantManager(this, bulletManager, griding, sunManager);
-            Components.Add(plantManager);
-            Components.Add(sunManager);
-
-            ZMan = new Zombies.Managers.ZombiesManager(this.griding);
-            this.Components.Add(ZMan);
+            this.Components.Add(new Scenes.PlantsVsZombies(this));
+            this.font = Content.Load<SpriteFont>("font");
         }
 
         // UnloadContent will be called once per game and is the place to unload
@@ -114,18 +77,6 @@ namespace PlantsVsZombies
                 this.Exit();
             }
 
-            if (GMouse.IsRightButtonClicked)
-            {
-                Plants_Bullets.Plant.Plant plant = new Plants_Bullets.Plant.DPea(this, plantManager, GMouse.MousePosition);
-            }
-
-            if (GMouse.IsLeftButtonClicked)
-            {
-                Zombies.Zombie zombie = new Zombies.Skeletons.BladeSkeleton(this);
-                zombie.Position = GMouse.MousePosition;
-                this.ZMan.Add(zombie);
-            }
-
             base.Update(gameTime);
         }
 
@@ -134,12 +85,11 @@ namespace PlantsVsZombies
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
-            spriteBatch.DrawString(font, "Mouse " + GMouse.MousePosition.X + "," + GMouse.MousePosition.Y, 
-                                    new Vector2(100f, 0f), Color.Chocolate);
-            spriteBatch.End();
-
             base.Draw(gameTime);
+
+            spriteBatch.Begin();
+            spriteBatch.DrawString(font, string.Concat("Mouse positio: ", GMouse.MousePosition.X, ", ", GMouse.MousePosition.Y), Vector2.Zero, Color.Red);
+            spriteBatch.End();
         }
 
         private void SetAnimationData()
@@ -230,7 +180,7 @@ namespace PlantsVsZombies
 
             SpriteBank.SetAnimationData("Images\\Plants\\DoublePea", 100, 55, 10, 40);
 
-            SpriteBank.SetAnimationData("Images\\Plants\\IcePea", 113, 79, 9, 33);
+            SpriteBank.SetAnimationData("Images\\Plants\\IcePea", 118, 63, 8, 33);
             SpriteBank.SetAnimationData("Images\\Bullets\\B_IcePea", 29, 22, 1, 1);
 
             SpriteBank.SetAnimationData("Images\\Plants\\Pea", 92, 62, 11, 33);
@@ -247,7 +197,7 @@ namespace PlantsVsZombies
 
             SpriteBank.SetAnimationData("Images\\Plants\\Stone", 101, 101, 10, 38);
 
-            SpriteBank.SetAnimationData("Images\\Plants\\Sun", 51, 40, 1, 1);
+            SpriteBank.SetAnimationData("Images\\Plants\\Sun", 50, 50, 15, 15);
 
             SpriteBank.SetAnimationData("Images\\Plants\\Sunflower", 84, 60, 12, 48);
 

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GameBaseXNA;
+using PlantsVsZombies.Plants_Bullets.Plant;
 
 namespace PlantsVsZombies.Zombies.States
 {
@@ -72,18 +73,18 @@ namespace PlantsVsZombies.Zombies.States
         {
             foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
             {
-                Zombie zombie = grc as Zombie;
-                if ((zombie != null) && (zombie != this.Zombie) && (zombie.CurrentState != Zombie.ZombieState.Death))
+                Plant plant = grc as Plant;
+                if ((plant != null) && !plant.IsDead)
                 {
-                    this.Damaging(zombie);
+                    this.Damaging(plant);
                 }
             }
         }
 
-        public virtual void Damaging(Zombie zombie)
+        public virtual void Damaging(Plant plant)
         {
-            Impacts.Damaging impDamage = new Impacts.Damaging(this.Game, this.Damage);
-            zombie.AddImpact(impDamage);
+            Plants_Bullets.Plant.Impacts.Damaging impDamage = new Plants_Bullets.Plant.Impacts.Damaging(this.Game, this.Damage);
+            plant.AddImpact(impDamage);
         }
 
         public override void CheckingState()
@@ -99,9 +100,11 @@ namespace PlantsVsZombies.Zombies.States
 
                 foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
                 {
-                    Zombie zombie = grc as Zombie;
-                    if ((zombie != null) && (zombie != this.Zombie) && (zombie.CurrentState != Zombie.ZombieState.Death))
+                    Plant plant = grc as Plant;
+                    if ((plant != null) && !plant.IsDead)
+                    {
                         return;
+                    }
                 }
 
                 this.Zombie.CurrentState = Zombie.ZombieState.Walk;

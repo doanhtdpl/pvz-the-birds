@@ -32,7 +32,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetAnimation()
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Stone"));
-            this.currentAnimation = this.animations[0];
+            this.CurrentAnimation = this.animations[0];
             base.SetAnimation();
         }
     }

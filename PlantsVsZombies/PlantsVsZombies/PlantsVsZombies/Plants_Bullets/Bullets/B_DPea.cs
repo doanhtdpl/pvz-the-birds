@@ -16,7 +16,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     {
         // Fields
         protected Counter.Timer timer;
-        protected int delay = 500;
+        protected int delay = 300;
         protected Vector2 position;
         
         public B_DPeaEngine(Game game, BulletManager bulletManager)

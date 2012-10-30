@@ -119,14 +119,6 @@ namespace PlantsVsZombies.Zombies
         public override void Draw(GameTime gameTime)
         {
             this.CurrentZombieState.Draw(gameTime);
-
-//             SpriteBatch sprBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
-//             SpriteFont font = (SpriteFont)this.Game.Services.GetService(typeof(SpriteFont));
-// 
-//             sprBatch.Begin();
-//             sprBatch.DrawString(font, String.Concat(this.Cell.Index.X, ", ", this.Cell.Index.Y), this.Position, Color.White);
-//             sprBatch.End();
-
             base.Draw(gameTime);
         }
 

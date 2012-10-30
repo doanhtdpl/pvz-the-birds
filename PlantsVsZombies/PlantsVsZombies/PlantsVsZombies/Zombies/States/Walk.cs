@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using GameBaseXNA;
+using PlantsVsZombies.Plants_Bullets.Plant;
 
 namespace PlantsVsZombies.Zombies.States
 {
@@ -62,8 +63,8 @@ namespace PlantsVsZombies.Zombies.States
 
             foreach (Griding.IGridable grc in this.Zombie.Cell.Components)
             {
-                Zombie zombie = grc as Zombie;
-                if ((zombie != null) && (zombie != this.Zombie) && (zombie.CurrentState != Zombie.ZombieState.Death))
+                Plant plant = grc as Plant;
+                if ((plant != null) && !plant.IsDead)
                 {
                     this.Zombie.CurrentState = Zombie.ZombieState.Attack;
                 }

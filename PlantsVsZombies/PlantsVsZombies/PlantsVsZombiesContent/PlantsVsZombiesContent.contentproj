@@ -30,43 +30,38 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Plants\B_Cherry.png">
+    <Compile Include="Images\Bullets\B_Cherry.png">
       <Name>B_Cherry</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_Chili.png">
+    <Compile Include="Images\Bullets\B_Chili.png">
       <Name>B_Chili</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_FreeMush.png">
+    <Compile Include="Images\Bullets\B_FreeMush.png">
       <Name>B_FreeMush</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_IcePea.png">
+    <Compile Include="Images\Bullets\B_IcePea.png">
       <Name>B_IcePea</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_Pea.png">
+    <Compile Include="Images\Bullets\B_Pea.png">
       <Name>B_Pea</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_WaterMush.png">
+    <Compile Include="Images\Bullets\B_WaterMush.png">
       <Name>B_WaterMush</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
     <Compile Include="Images\Plants\Cherry.png">
       <Name>Cherry</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Images\Plants\IcePea.png">
-      <Name>IcePea</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -415,22 +410,22 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\Plants\B_FreeMushEffect.png">
+    <Compile Include="Images\Bullets\B_FreeMushEffect.png">
       <Name>B_FreeMushEffect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_IcePeaEffect.png">
+    <Compile Include="Images\Bullets\B_IcePeaEffect.png">
       <Name>B_IcePeaEffect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_PeaEffect.png">
+    <Compile Include="Images\Bullets\B_PeaEffect.png">
       <Name>B_PeaEffect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Images\Plants\B_WaterMushEffect.png">
+    <Compile Include="Images\Bullets\B_WaterMushEffect.png">
       <Name>B_WaterMushEffect</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
@@ -696,6 +691,27 @@
     </Compile>
     <Compile Include="Images\Controls\YesOver.png">
       <Name>YesOver</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Plants\DoublePea.PNG">
+      <Name>DoublePea</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Plants\Sun.png">
+      <Name>Sun</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\Plants\IcePea.PNG">
+      <Name>IcePea</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

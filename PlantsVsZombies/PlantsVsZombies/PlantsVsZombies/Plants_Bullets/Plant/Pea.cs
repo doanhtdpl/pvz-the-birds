@@ -22,7 +22,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public override void Initialize()
         {
             this.bulletEngine = new Bullets.B_PeaEngine(this.Game, plantManager.GetBulletManager);
-            this.ShootDelay = 0;
+            this.ShootDelay = 1200;
             this.Range = 9;
 
             base.Initialize();
@@ -31,15 +31,15 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetAnimation()
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Pea"));
-            this.currentAnimation = this.animations[0];
+            this.CurrentAnimation = this.animations[0];
             base.SetAnimation();
         }
 
         protected override void SetBulletPosition()
         {
             // Bullet position
-            this.bulletPosition.X = this.currentAnimation.PositionX + this.currentAnimation.SizeX - 20f;
-            this.bulletPosition.Y = this.currentAnimation.PositionY + 1f / 4 * (float)this.currentAnimation.SizeY;
+            this.bulletPosition.X = this.CurrentAnimation.PositionX + this.CurrentAnimation.SizeX - 20f;
+            this.bulletPosition.Y = this.CurrentAnimation.PositionY + 1f / 4 * (float)this.CurrentAnimation.SizeY;
         }
 
         protected override void shootTimer_OnMeet(object o)
