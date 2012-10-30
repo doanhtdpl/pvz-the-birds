@@ -17,6 +17,8 @@ namespace GameBaseXNA
     /// </summary>
     public class Scene : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        Scene Caller { get; set; }
+
         /// <summary>
         /// Scene Components will be updated (and drawed) automatically by scene
         /// </summary>
@@ -109,6 +111,15 @@ namespace GameBaseXNA
                     dgc.Draw(gameTime);
             }
             base.Draw(gameTime);
+        }
+
+        public virtual void Return()
+        {
+            if (this.Caller != null)
+            {
+                this.HideScene();
+                this.Caller.ShowScene();
+            }
         }
 
         /// <summary>
