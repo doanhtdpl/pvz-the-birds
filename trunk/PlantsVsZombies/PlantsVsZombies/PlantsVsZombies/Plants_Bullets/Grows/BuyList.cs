@@ -30,7 +30,11 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         {
             this.Manager = manager;
             this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\BuyPlant");
-            this.MaxItem = 8;
+            this.MaxItem = 6;
+            
+            this.GridAlign = new Vector2(-90f, -7f);
+            this.Griding.Width = 360f;
+            this.Griding.Height = 70f;
         }
         #endregion
 
@@ -49,9 +53,9 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
 
         public virtual void GrowButtonClickWhenChoosing(object sender, EventArgs e)
         {
-            if (this.Manager.ChooseList.Add((GrowButtons.GrowButton)sender))
+            if (this.Manager.ChooseList.AddGrowButton((GrowButtons.GrowButton)sender))
             {
-                this.RemoveControl((GrowButtons.GrowButton)sender);
+                this.RemoveGrowButton((GrowButtons.GrowButton)sender);
             }
         }
 

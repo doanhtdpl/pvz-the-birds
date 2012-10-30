@@ -78,7 +78,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected void SetDestToFall()
         {
-            destination.X = this.position.X + 50f;
+            destination.X = this.position.X + 20f;
             destination.Y = this.position.Y + griding.CellHeight - animation.Bound.Height;
         }
 
@@ -100,7 +100,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
     public class PlantSunEngine : SunEngine
     {
         // Plant's position
-        protected Vector2 position;
+        public Vector2 Position;
         protected int sunValue;
 
         public int SunValue { set { this.sunValue = value; } }
@@ -108,7 +108,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public PlantSunEngine(Game game, SunManager sunManager, Vector2 sunBankLocation, Vector2 position)
             : base(game, sunManager, sunBankLocation)
         {
-            this.position = position;
+            this.Position = position;
         }
 
         public override void Initialize()
@@ -119,7 +119,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         public override void AddSun()
         {
-            PlantSun plantSun = new PlantSun(this.Game, griding, sunBankLocation, position);
+            PlantSun plantSun = new PlantSun(this.Game, griding, sunBankLocation, Position);
             plantSun.SunValue = sunValue;
             this.Add(plantSun);
         }

@@ -17,7 +17,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
     {
         // Fields
         protected Sprite sprite;
-        protected Vector2 velocity = new Vector2(5f, 0f);
+        protected Vector2 velocity = new Vector2(10f, 0f);
 
         // Properties
         public Sprite BSprite

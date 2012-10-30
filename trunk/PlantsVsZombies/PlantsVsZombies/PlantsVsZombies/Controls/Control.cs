@@ -223,7 +223,31 @@ namespace PlantsVsZombies.Controls
                 this.position = value;
                 this.bound.X = (int)position.X;
                 this.bound.Y = (int)position.Y;
-                // Set position for button's sprite
+                this.controlBackground.Position = this.position;
+                this.buttonClicked.Position = this.position;
+            }
+
+        }
+
+        public new float PositionX
+        {
+            get { return this.position.X; }
+            set
+            {
+                this.position.X = value;
+                this.bound.X = (int)position.X;
+                this.controlBackground.Position = this.position;
+                this.buttonClicked.Position = this.position;
+            }
+        }
+
+        public new float PositionY
+        {
+            get { return this.position.Y; }
+            set
+            {
+                this.position.Y = value;
+                this.bound.Y = (int)position.Y;
                 this.controlBackground.Position = this.position;
                 this.buttonClicked.Position = this.position;
             }
@@ -390,13 +414,16 @@ namespace PlantsVsZombies.Controls
                     float movementY = value.Y - position.Y;
                     this.position = value;
 
-                    foreach (KeyValuePair<string, Rectangle> rect in maps)
+                    List<string> keys = new List<string>(maps.Keys);
+
+                    foreach (string key in keys)
                     {
-                        maps[rect.Key] = new Rectangle((int)(rect.Value.X + movementX), (int)(rect.Value.Y + movementY), 
-                                                                rect.Value.Width, rect.Value.Height);
+                        maps[key] = new Rectangle((int)(maps[key].X + movementX), (int)(maps[key].Y + movementY),
+                                                                maps[key].Width, maps[key].Height);
                     }
                 }
             }
+
             public float Width
             {
                 get { return this.width; }
@@ -527,12 +554,65 @@ namespace PlantsVsZombies.Controls
         }
 
         #region Attributes
+        public Vector2 GridAlign = Vector2.Zero;
+
+        public new Vector2 Position
+        {
+            get
+            {
+                return this.position;
+            }
+            set
+            {
+                this.position = value;
+                this.bound.X = (int)this.position.X;
+                this.bound.Y = (int)this.position.Y;
+                this.Griding.Position = this.position;
+
+                this.ControlBackground.Position = this.position + this.GridAlign;
+                this.ReSort();
+            }
+        }
+
+        public new float PositionX
+        {
+            get
+            {
+                return this.position.X;
+            }
+            set
+            {
+                this.position.X = value;
+                this.bound.X = (int)this.position.X;
+                this.Griding.Position = this.position;
+
+                this.ControlBackground.PositionX = this.position.X + this.GridAlign.X;
+                this.ReSort();
+            }
+        }
+
+        public new float PositionY
+        {
+            get
+            {
+                return this.position.Y;
+            }
+            set
+            {
+                this.position.Y = value;
+                this.bound.Y = (int)this.position.Y;
+                this.Griding.Position = this.position;
+
+                this.ControlBackground.PositionY = this.position.Y + this.GridAlign.Y;
+                this.ReSort();
+            }
+        }
 
         public List<Control> listControl;
         protected int count = 0;
 
         // Griding for List
-        protected ControlGriding griding;
+        public ControlGriding Griding { get; set; }
 
         public new Sprite ControlBackground
         {
@@ -543,8 +623,8 @@ namespace PlantsVsZombies.Controls
             set
             {
                 base.ControlBackground = value;
-                this.griding.Width = this.controlBackground.Width;
-                this.griding.Height = this.controlBackground.Height;
+                this.Griding.Width = this.controlBackground.Width;
+                this.Griding.Height = this.controlBackground.Height;
             }
         }
         #endregion
@@ -553,7 +633,7 @@ namespace PlantsVsZombies.Controls
         public ListView(Game game)
             : base(game, (Sprite) null, Vector2.Zero)
         {
-            this.griding = new ControlGriding(Vector2.Zero, 0f, 0f, 0f);
+            this.Griding = new ControlGriding(Vector2.Zero, 0f, 0f, 0f);
             this.listControl = new List<Control>();
             this.Initialize();
         }
@@ -561,14 +641,14 @@ namespace PlantsVsZombies.Controls
         public ListView(Game game, Sprite controlSprite, Vector2 position, float align)
             : base(game, controlSprite, position)
         {
-            this.griding = new ControlGriding(position, controlSprite.Width, controlSprite.Height, align);
+            this.Griding = new ControlGriding(position + this.GridAlign, controlSprite.Width, controlSprite.Height, align);
             listControl = new List<Control>();
             this.Initialize();
         }
         public ListView(ListView listView)
             : base(listView)
         {
-            this.griding = new ControlGriding(listView.griding.Position, listView.griding.Width, listView.griding.Height, listView.griding.Align);
+            this.Griding = new ControlGriding(listView.Griding.Position, listView.Griding.Width, listView.Griding.Height, listView.Griding.Align);
             this.listControl = new List<Control>(listView.listControl);
             this.Initialize();
         }
@@ -613,7 +693,7 @@ namespace PlantsVsZombies.Controls
 
         public virtual bool Add(Control control)
         {
-            if (griding.AddItem(control))
+            if (Griding.AddItem(control))
                 listControl.Add(control);
             return true;
         }
@@ -621,17 +701,17 @@ namespace PlantsVsZombies.Controls
         public virtual void RemoveControl(Control control)
         {
             listControl.Remove(control);
-            griding.RemoveAt(control);
+            Griding.RemoveAt(control);
 
             ReSort();
         }
 
         protected void ReSort()
         {
-            griding.Remove();
+            Griding.Remove();
             foreach(Control control in listControl)
             {
-                griding.AddItem(control);
+                Griding.AddItem(control);
             }
         }
 
@@ -642,7 +722,7 @@ namespace PlantsVsZombies.Controls
                 control.Remove();
             }
             this.listControl.Clear();
-            griding.Remove();
+            Griding.Remove();
         }
         #endregion
 

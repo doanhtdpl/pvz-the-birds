@@ -58,19 +58,24 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             this.PositionChanged = true;
             Griding.Cell cell = plantManager.GetGriding.IndexOf(this.position);
+            if (cell == null)
+                return;
+
             Vector2 pos = new Vector2(cell.Range.Left, cell.Range.Top);
             this.position = pos;
             foreach (Animation ani in animations)
             {
                 ani.PositionX = pos.X;
-                ani.PositionY = pos.Y + plantManager.GetGriding.CellHeight - currentAnimation.Bound.Height;
+                ani.PositionY = pos.Y + plantManager.GetGriding.CellHeight - CurrentAnimation.Bound.Height;
             }
+
+            CalculateCenter();
         }
 
         protected override void CalculateCenter()
         {
-            this.center.X = this.position.X + this.currentAnimation.Bound.Width / 2;
-            this.center.Y = this.position.Y + this.currentAnimation.Bound.Height;
+            this.center.X = this.position.X + this.CurrentAnimation.Bound.Width / 2;
+            this.center.Y = this.position.Y + this.CurrentAnimation.Bound.Height;
             base.CalculateCenter();
         }
 

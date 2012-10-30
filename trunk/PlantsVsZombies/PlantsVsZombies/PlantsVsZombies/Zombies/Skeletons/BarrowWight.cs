@@ -58,14 +58,6 @@ namespace PlantsVsZombies.Zombies.Skeletons
             this.Damage = 2;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
-
-        public override void Damaging(Zombie zombie)
-        {
-            Impacts.Cold cold = new Impacts.Cold(this.Game, 3000, 0.5f);
-            zombie.AddImpact(cold);
-
-            base.Damaging(zombie);
-        }
     }
 
     public class BarrowWightDeath : States.Death

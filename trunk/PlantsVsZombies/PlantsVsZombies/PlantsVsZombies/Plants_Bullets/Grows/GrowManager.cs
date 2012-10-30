@@ -23,9 +23,12 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         #region Fields & Properties
         public Plant.PlantManager Manager { get; set; }
 
+        private Counter.Timer moveTimer { get; set; }
+        public bool IsPlaying { get; set; }
+
         public ChooseList ChooseList { get; set; }
         public BuyList BuyList { get; set; }
-
+        
         protected GrowButtons.GrowButton waitedButton = null;
         #endregion
 
@@ -34,8 +37,11 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             : base(manager.Game)
         {
             this.Manager = manager;
+            this.IsPlaying = false;
             this.ChooseList = new ChooseList(this);
+            this.ChooseList.Position = new Vector2(-500f, 110f);
             this.BuyList = new BuyList(this);
+            this.BuyList.Position = new Vector2(110f, -100f);
         }
         #endregion
 
@@ -71,13 +77,15 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
                 if (plant != null)
                 {
                     plant.Position = position;
-                    this.Manager.AddPlant(plant);
                 }
             }
         }
 
         public override void Update(GameTime gameTime)
         {
+            if ((this.waitedButton != null) && GMouse.IsLeftButtonClicked)
+                this.Grow(GMouse.MousePosition);
+
             this.ChooseList.Update(gameTime);
             this.BuyList.Update(gameTime);
 
@@ -90,6 +98,17 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             this.BuyList.Draw(gameTime);
 
             base.Draw(gameTime);
+        }
+
+        public virtual void MoveIn()
+        {
+            this.ChooseList.PositionX += 5f;
+            this.BuyList.PositionY += 1f;
+        }
+
+        public virtual void MoveOut()
+        {
+            this.ChooseList.PositionX -= 5f;
         }
         #endregion
     }

@@ -38,7 +38,7 @@ namespace PlantsVsZombies.Zombies.Managers.Waves
         {
             get
             {
-                if ((0 <= this.currentWave) && (this.currentWave <= this.Waves.Count))
+                if ((0 <= this.currentWave) && (this.currentWave < this.Waves.Count))
                     return (this.Waves[this.currentWave]);
 
                 return null;

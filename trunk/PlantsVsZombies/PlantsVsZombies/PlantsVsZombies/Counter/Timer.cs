@@ -61,6 +61,14 @@ namespace PlantsVsZombies.Counter
             this.Enabled = true;
         }
 
+        public void Start(bool meetFirst)
+        {
+            if (meetFirst & (this.OnMeet != null))
+                this.OnMeet(this);
+
+            this.Enabled = true;
+        }
+
         public void Reset()
         {
             timeCounter = TimeSpan.Zero;

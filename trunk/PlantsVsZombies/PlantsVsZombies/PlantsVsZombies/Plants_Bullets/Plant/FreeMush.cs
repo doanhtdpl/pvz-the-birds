@@ -22,7 +22,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public override void Initialize()
         {
             this.bulletEngine = new Bullets.B_FreeMushEngine(this.Game, plantManager.GetBulletManager);
-            this.ShootDelay = 2000;
+            this.ShootDelay = 1200;
             this.Range = 9;
 
             base.Initialize();
@@ -33,18 +33,45 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             base.Update(gameTime);
         }
 
+        protected override void AttackDetect()
+        {
+            this.ChangeState(PlantState.NORMAL);
+
+            if (this.health <= 0)
+            {
+                this.ChangeState(PlantState.DIE);
+                return;
+            }
+
+            if (this.Cell != null)
+            {
+                Griding.Cell[] line = this.Cell.Line;
+                for (int i = (int)this.Cell.Index.X; (i < line.Length) && (i < this.Cell.Index.X + 3); ++i)
+                {
+                    foreach (Griding.IGridable grc in line[i].Components)
+                    {
+                        if (grc is Zombies.Zombie)
+                        {
+                            this.ChangeState(PlantState.ATTACK);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
         protected override void SetAnimation()
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\FreeMushroom"));
-            this.currentAnimation = this.animations[0];
+            this.CurrentAnimation = this.animations[0];
             base.SetAnimation();
         }
 
         protected override void SetBulletPosition()
         {
             // Bullet position
-            this.bulletPosition.X = this.currentAnimation.PositionX + this.currentAnimation.SizeX - 20f;
-            this.bulletPosition.Y = this.currentAnimation.PositionY + 1f / 2 * (float)this.currentAnimation.SizeY;
+            this.bulletPosition.X = this.CurrentAnimation.PositionX + this.CurrentAnimation.SizeX - 20f;
+            this.bulletPosition.Y = this.CurrentAnimation.PositionY + 1f / 2 * (float)this.CurrentAnimation.SizeY;
         }
 
         protected override void shootTimer_OnMeet(object o)

@@ -15,6 +15,19 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
     public class SunFlower : SupportPlant
     {
         // SunEngine
+        public override Vector2 Position
+        {
+            get
+            {
+                return base.Position;
+            }
+            set
+            {
+                base.Position = value;
+                this.sunEngine.Position = value;
+            }
+        }
+
         protected PlantSunEngine sunEngine;
 
         public SunFlower(Game game, PlantManager plantManager, Vector2 position)
@@ -40,7 +53,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetAnimation()
         {
             this.animations.Add(SpriteBank.GetAnimation("Images\\Plants\\Sunflower"));
-            this.currentAnimation = this.animations[0];
+            this.CurrentAnimation = this.animations[0];
             base.SetAnimation();
         }
     }

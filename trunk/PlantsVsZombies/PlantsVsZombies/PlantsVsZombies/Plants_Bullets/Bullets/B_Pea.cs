@@ -25,7 +25,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             this.BName = @"Images\\Bullets\\B_Pea";
             this.B_Effect = @"Images\\Bullets\\B_PeaEffect";
             this.BSprite = SpriteBank.GetSprite(this.BName);
-            this.damage = 100;
+            this.damage = 10;
             base.Initialize();
         }
     }

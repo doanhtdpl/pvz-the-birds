@@ -36,7 +36,7 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
             this.B_Effect = @"Images\\Bullets\\B_IcePeaEffect";
 
             this.BSprite = SpriteBank.GetSprite(BName);
-            this.damage = 100;
+            this.damage = 12;
             this.slowDown = 0.5f;
             base.Initialize();
         }
