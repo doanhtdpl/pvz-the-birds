@@ -46,6 +46,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
                 ani.Update(gameTime);
             }
 
+            this.CollisionDetect();
+
             base.Update(gameTime);
         }
 

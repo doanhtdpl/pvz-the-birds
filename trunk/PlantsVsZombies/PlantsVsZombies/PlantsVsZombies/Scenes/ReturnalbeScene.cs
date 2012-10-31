@@ -13,29 +13,4 @@ using GameBaseXNA;
 
 namespace PlantsVsZombies.Scenes
 {
-    public class ReturnalbeScene : Scene
-    {
-        #region Fields & Properties
-        Scene Caller { get; set; }
-        #endregion
-
-        #region Constructors
-        public ReturnalbeScene(SceneManager manager)
-            : base(manager)
-        {
-
-        }
-        #endregion
-
-        #region Methods
-        public virtual void Return()
-        {
-            if (this.Caller != null)
-            {
-                this.HideScene();
-                this.Caller.ShowScene();
-            }
-        }
-        #endregion
-    }
 }

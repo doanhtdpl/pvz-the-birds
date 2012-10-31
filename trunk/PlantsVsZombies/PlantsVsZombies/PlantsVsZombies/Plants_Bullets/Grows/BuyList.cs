@@ -22,6 +22,8 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
 
         public int MaxItem { get; set; }
         public bool IsMax { get { return (this.listControl.Count >= this.MaxItem); } }
+
+        public SpriteFont SunFont { get; set; }
         #endregion
 
         #region Constructors
@@ -31,6 +33,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             this.Manager = manager;
             this.ControlBackground = SpriteBank.GetSprite(@"Images\Controls\BuyPlant");
             this.MaxItem = 6;
+            this.SunFont = this.Game.Content.Load<SpriteFont>("Tahoma");
             
             this.GridAlign = new Vector2(-90f, -7f);
             this.Griding.Width = 360f;
@@ -83,6 +86,16 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
                     grButton.Clicked += new EventHandler(this.GrowButtonClickWhenPlaying);
                 }
             }
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
+
+            SpriteBatch sprBatch = (SpriteBatch)this.Game.Services.GetService(typeof(SpriteBatch));
+            sprBatch.Begin();
+            sprBatch.DrawString(this.SunFont, this.Manager.Manager.GetSunManager.NumberOfSuns.ToString("#,#"), this.ControlBackground.Position + new Vector2(24f, 44f), Color.Black);
+            sprBatch.End();
         }
 
         #endregion

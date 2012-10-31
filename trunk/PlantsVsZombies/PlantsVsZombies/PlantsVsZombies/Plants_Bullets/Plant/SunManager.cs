@@ -22,7 +22,28 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         // Fall SunEngine
         protected FallSunEngine fallSunEngine;
 
-        public int NumberOfSuns { get; set; }
+        private int numberOfSuns = 0;
+        public delegate void OnSunChangedProc();
+        public event OnSunChangedProc OnSunChanged;
+        public int NumberOfSuns
+        {
+            get
+            {
+                return this.numberOfSuns;
+            }
+            set
+            {
+                this.numberOfSuns = value;
+                if (this.numberOfSuns < 0)
+                    this.numberOfSuns = 0;
+                if (this.numberOfSuns > 9999)
+                    this.numberOfSuns = 9999;
+
+                if (this.OnSunChanged != null)
+                    OnSunChanged();
+                
+            }
+        }
 
         public Griding.Griding SetGriding
         {
@@ -35,6 +56,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public Vector2 SunBankLocation
         {
             get { return this.sunBankLocation; }
+            set { this.sunBankLocation = value; }
         }
 
         public SunManager(Game game)
@@ -48,7 +70,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             suns = new List<Sun>();
             this.sunBankLocation = new Vector2(10f, 0f);
-            fallSunEngine = new FallSunEngine(this.Game, this, sunBankLocation);
+            fallSunEngine = new FallSunEngine(this.Game, this);
             base.Initialize();
         }
 

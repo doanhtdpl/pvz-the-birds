@@ -78,8 +78,8 @@ namespace PlantsVsZombies
         {
             for (int i = 0; i < size; ++i)
             {
-                Vector2 velocity = new Vector2(1f * (float)GRandom.RandomDouble() * 2 - 1,
-                                                1f * (float)GRandom.RandomDouble() * 2 - 1);
+                Vector2 velocity = new Vector2(1f * (float)GRandom.RandomDouble() * 4 - 1,
+                                                1f * (float)GRandom.RandomDouble() * 4 - 1);
                 int TTL = timeToLive;
                 Color color = GRandom.RandomColor();
                 float angular = 0.1f * (GRandom.RandomFloat() * 2f - 1f);

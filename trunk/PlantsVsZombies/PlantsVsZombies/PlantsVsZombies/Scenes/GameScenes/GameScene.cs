@@ -58,8 +58,9 @@ namespace PlantsVsZombies.Scenes.GameScenes
 
             this.Grid = new Griding.Griding(this.Game, new Rectangle(0, 60, 760, 380), 5, 9);
             this.PlantManager = new Plants_Bullets.Plant.PlantManager(this.Game, this.Grid);
-            this.PlantManager.GetSunManager.NumberOfSuns = 100000;
             this.GrowManager = new Hospital.Hospital_GrowManager(this.PlantManager);
+            this.PlantManager.GetSunManager.OnSunChanged += new SunManager.OnSunChangedProc(this.GrowManager.OnSunChanged);
+            this.PlantManager.GetSunManager.NumberOfSuns = 100;
 
             this.ZombiesManager = new Zombies.Managers.ZombiesManager(this.Grid);
             this.ZombiesManager.Generator = new Hospital.Hospital_ZombiesGenerator(this.ZombiesManager);
@@ -149,7 +150,7 @@ namespace PlantsVsZombies.Scenes.GameScenes
             {
                 this.moveTimer.Stop();
                 this.moveTimer.OnMeet -= new Counter.EventOnCounterMeet(this.MoveOut);
-                this.GrowManager.BuyList.Play();
+                this.GrowManager.Play();
                 this.ZombiesManager.Generator.Begin();
                 this.state = GameSceneState.Play;
             }

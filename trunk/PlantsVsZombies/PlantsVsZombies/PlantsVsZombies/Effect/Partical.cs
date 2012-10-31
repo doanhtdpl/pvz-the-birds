@@ -23,7 +23,7 @@ namespace PlantsVsZombies
             this.velocity = velocity;
 
             this.timeToLive = timeToLive;
-            this.Texture.Color = colorOver;
+//            this.Texture.Color = colorOver;
 
             this.Texture.Angle = angle;
             this.angular = angular;

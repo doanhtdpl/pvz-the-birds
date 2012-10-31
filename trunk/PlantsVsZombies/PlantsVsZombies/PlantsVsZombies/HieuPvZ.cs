@@ -186,7 +186,7 @@ namespace PlantsVsZombies
             SpriteBank.SetAnimationData("Images\\Plants\\Pea", 92, 62, 11, 33);
             SpriteBank.SetAnimationData("Images\\Bullets\\B_Pea", 29, 22, 1, 1);
 
-            SpriteBank.SetAnimationData("Images\\Plants\\FreeMush", 44, 34, 24, 35);
+            SpriteBank.SetAnimationData("Images\\Plants\\FreeMushroom", 44, 34, 24, 35);
             SpriteBank.SetAnimationData("Images\\Bullets\\B_FreeMush", 26, 11, 1, 1);
 
             SpriteBank.SetAnimationData("Images\\Plants\\SeaMushroom", 58, 51, 18, 48);
