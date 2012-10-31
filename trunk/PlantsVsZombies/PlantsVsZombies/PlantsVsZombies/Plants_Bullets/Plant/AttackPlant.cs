@@ -85,7 +85,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             if (this.Cell != null)
             {
                 Griding.Cell[] line = this.Cell.Line;
-                for (int i = (int)this.Cell.Index.X; i < line.Length; ++i)
+                for (int i = (int)this.Cell.Index.Y; i < line.Length; ++i)
                 {
                     foreach (Griding.IGridable grc in line[i].Components)
                     {

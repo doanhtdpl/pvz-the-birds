@@ -55,7 +55,7 @@ namespace PlantsVsZombies.Zombies.Spiders
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Spiders\Spider\Attack");
             this.Image.Delay = 40;
             this.Align = new Vector2(12f, 38f);
-            this.Damage = 2;
+            this.Damage = 10;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
     }

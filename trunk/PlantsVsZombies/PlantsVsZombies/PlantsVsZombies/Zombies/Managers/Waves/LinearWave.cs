@@ -95,7 +95,7 @@ namespace PlantsVsZombies.Zombies.Managers.Waves
 
         public virtual void Begin()
         {
-            generateTimer.Start();
+            generateTimer.Start(true);
             totalTimer.Start();
         }
 
