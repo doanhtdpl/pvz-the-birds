@@ -63,8 +63,17 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         public override void Update(GameTime gameTime)
         {
             Move();
-            sprite.Update(gameTime);
-            base.Update(gameTime);
+            if (effect != null)
+            {
+                effect.Update(gameTime);
+                if (effect.IsDead)
+                    this.isCollided = true;
+            }
+            else
+            {
+                base.Update(gameTime);
+                CollisionDetect();
+            }
         }
 
         protected virtual void Move()
@@ -75,8 +84,15 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Draw(GameTime gameTime)
         {
-            sprite.Draw(gameTime);
-            base.Draw(gameTime);
+            if (effect != null)
+            {
+                effect.Draw(gameTime);
+            }
+            else
+            {
+                sprite.Draw(gameTime);
+                base.Draw(gameTime);
+            }
         }
     }
 }
