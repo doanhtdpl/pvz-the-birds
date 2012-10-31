@@ -22,7 +22,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
         public Hospital_ZombiesGenerator(ZombiesManager manager)
             : base(manager)
         {
-            this.Waves.Add(new IdleWave(manager, 15000000));
+            this.Waves.Add(new IdleWave(manager, 1500));
             this.Waves.Add(new Wave1(manager));
             this.Waves.Add(new Wave2(manager));
             this.Waves.Add(new Wave3(manager));
