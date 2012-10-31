@@ -42,7 +42,7 @@ namespace PlantsVsZombies.Zombies.Zombies
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Zombies\Histachii\Walk");
             this.Image.Delay = 40;
             this.Align = new Vector2(3f, 72f);
-            this.Velocity = GRandom.RandomInt(5, 15);
+            this.Velocity = 2.5f;
         }
         #endregion
     }
@@ -53,9 +53,9 @@ namespace PlantsVsZombies.Zombies.Zombies
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Zombies\Histachii\Attack");
-            this.Image.Delay = 40;
+            this.Image.Delay = 60;
             this.Align = new Vector2(23f, 73f);
-            this.Damage = 2;
+            this.Damage = 15;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
     }

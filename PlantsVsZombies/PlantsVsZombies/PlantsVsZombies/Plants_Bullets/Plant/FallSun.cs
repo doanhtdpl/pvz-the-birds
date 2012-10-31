@@ -23,6 +23,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         public FallSun(Game game, Griding.Griding griding, Vector2 bankDirection)
             : base(game, griding, bankDirection)
         {
+            this.sunValue = 35;
         }
 
         public override void Initialize()
@@ -76,8 +77,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
     public class FallSunEngine : SunEngine
     {
-        public FallSunEngine(Game game, SunManager sunManager, Vector2 sunBankLocation)
-            : base(game, sunManager, sunBankLocation)
+        public FallSunEngine(Game game, SunManager sunManager)
+            : base(game, sunManager, sunManager.SunBankLocation)
         {
         }
 

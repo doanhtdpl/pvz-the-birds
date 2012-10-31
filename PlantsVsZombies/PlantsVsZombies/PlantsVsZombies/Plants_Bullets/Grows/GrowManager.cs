@@ -40,6 +40,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
             this.IsPlaying = false;
             this.ChooseList = new ChooseList(this);
             this.ChooseList.Position = new Vector2(-500f, 110f);
+            this.Manager.GetSunManager.SunBankLocation = new Vector2(35f, 5f);
             this.BuyList = new BuyList(this);
             this.BuyList.Position = new Vector2(110f, -100f);
         }
@@ -109,6 +110,33 @@ namespace PlantsVsZombies.Plants_Bullets.Grows
         public virtual void MoveOut()
         {
             this.ChooseList.PositionX -= 5f;
+        }
+
+        public virtual void OnSunChanged()
+        {
+            foreach (Control control in this.BuyList.listControl)
+            {
+                GrowButtons.GrowButton grBt = control as GrowButtons.GrowButton;
+                if (grBt != null)
+                {
+                    if (!grBt.LastCanBuy && (grBt.Price <= this.Manager.GetSunManager.NumberOfSuns))
+                    {
+                        grBt.LastCanBuy = true;
+                        grBt.ControlBackground.Color = GMath.DeGammaBlend(grBt.ControlBackground.Color, Color.Black, 0.4f);
+                    }
+                    else if (grBt.LastCanBuy && (grBt.Price > this.Manager.GetSunManager.NumberOfSuns))
+                    {
+                        grBt.LastCanBuy = false;
+                        grBt.ControlBackground.Color = GMath.GammaBlend(grBt.ControlBackground.Color, Color.Black, 0.4f);
+                    }
+                }
+            }
+        }
+
+        public virtual void Play()
+        {
+            this.BuyList.Play();
+            this.OnSunChanged();
         }
         #endregion
     }

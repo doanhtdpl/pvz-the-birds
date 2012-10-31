@@ -22,7 +22,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
         public Hospital_ZombiesGenerator(ZombiesManager manager)
             : base(manager)
         {
-            this.Waves.Add(new IdleWave(manager, 1500));
+            this.Waves.Add(new IdleWave(manager, 45000));
             this.Waves.Add(new Wave1(manager));
             this.Waves.Add(new Wave2(manager));
             this.Waves.Add(new Wave3(manager));
@@ -36,7 +36,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
     {
         #region Contructors
         public Wave1(ZombiesManager manager)
-            : base(manager, 1, 0, 12000)
+            : base(manager, 2, 10000, 22000)
         {
 
         }
@@ -57,7 +57,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
     {
         #region Contructors
         public Wave2(ZombiesManager manager)
-            : base(manager, 2, 3000, 6000)
+            : base(manager, 4, 8000, 25000)
         {
 
         }
@@ -78,7 +78,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
     {
         #region Contructors
         public Wave3(ZombiesManager manager)
-            : base(manager, 6, 1000, 6000)
+            : base(manager, 6, 6000, 40000)
         {
 
         }
@@ -109,7 +109,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
     {
         #region Contructors
         public Wave4(ZombiesManager manager)
-            : base(manager, 15, 500, 10000)
+            : base(manager, 15, 3000, 50000)
         {
 
         }
@@ -140,7 +140,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
     {
         #region Contructors
         public Wave5(ZombiesManager manager)
-            : base(manager, 20, 800, 30, 16000)
+            : base(manager, 20, 3000, 100, 60000)
         {
 
         }
@@ -150,7 +150,7 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
         public override Zombie Generate()
         {
             Zombie zombie = null;
-            switch (GRandom.RandomInt(2))
+            switch (GRandom.RandomInt(3))
             {
                 case 0:
                     zombie = new Zombies.Spiders.GiantSpider(this.Game);

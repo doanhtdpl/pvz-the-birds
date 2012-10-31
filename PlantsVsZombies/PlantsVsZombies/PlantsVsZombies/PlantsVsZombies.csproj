@@ -154,7 +154,6 @@
     <Compile Include="Zombies\Spiders\Drider.cs" />
     <Compile Include="Zombies\Spiders\GiantSpider.cs" />
     <Compile Include="Zombies\Spiders\Remorhaz.cs" />
-    <Compile Include="Zombies\Spiders\Spider.cs" />
     <Compile Include="Zombies\States\Attack.cs" />
     <Compile Include="Zombies\States\Death.cs" />
     <Compile Include="Zombies\States\Walk.cs" />

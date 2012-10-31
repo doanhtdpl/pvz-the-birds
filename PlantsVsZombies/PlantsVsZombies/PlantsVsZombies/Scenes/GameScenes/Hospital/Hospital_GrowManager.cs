@@ -26,7 +26,12 @@ namespace PlantsVsZombies.Scenes.GameScenes.Hospital
             this.ChooseList.AddGrowButton(new SunFlowerButton(this));
             this.ChooseList.AddGrowButton(new PeaButton(this));
             this.ChooseList.AddGrowButton(new DoublePeaButton(this));
-            this.ChooseList.AddGrowButton(new IcePeaButton(this));
+            this.ChooseList.AddGrowButton(new CherryButton(this));
+            this.ChooseList.AddGrowButton(new ChiliButton(this));
+            this.ChooseList.AddGrowButton(new FreeMushroomButton(this));
+            this.ChooseList.AddGrowButton(new MineButton(this));
+            this.ChooseList.AddGrowButton(new StoneButton(this));
+            this.ChooseList.AddGrowButton(new WaterMushroomButton(this));
         }
         #endregion
     }

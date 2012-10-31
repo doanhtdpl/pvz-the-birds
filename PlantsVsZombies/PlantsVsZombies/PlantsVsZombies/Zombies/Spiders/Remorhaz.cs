@@ -42,7 +42,7 @@ namespace PlantsVsZombies.Zombies.Spiders
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Spiders\Remorhaz\Walk");
             this.Image.Delay = 40;
             this.Align = new Vector2(18f, 146f);
-            this.Velocity = GRandom.RandomInt(5, 15);
+            this.Velocity = 0.75f;
         }
         #endregion
     }
@@ -53,9 +53,9 @@ namespace PlantsVsZombies.Zombies.Spiders
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Spiders\Remorhaz\Attack");
-            this.Image.Delay = 40;
+            this.Image.Delay = 100;
             this.Align = new Vector2(57f, 159f);
-            this.Damage = 2;
+            this.Damage = 20;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
     }

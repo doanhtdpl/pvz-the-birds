@@ -36,7 +36,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             sunEngine = new PlantSunEngine(game, plantManager.GetSunManager,
                 plantManager.GetSunManager.SunBankLocation, this.position);
             sunEngine.SetGriding = plantManager.GetGriding;
-            sunEngine.SunValue = 50;
+            sunEngine.SunValue = 35;
         }
 
         public override void Initialize()

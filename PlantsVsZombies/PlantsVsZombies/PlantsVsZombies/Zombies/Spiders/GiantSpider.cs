@@ -42,7 +42,7 @@ namespace PlantsVsZombies.Zombies.Spiders
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Spiders\Giant\Walk");
             this.Image.Delay = 40;
             this.Align = new Vector2(24f, 56f);
-            this.Velocity = GRandom.RandomInt(5, 15);
+            this.Velocity = 1.5f;
         }
         #endregion
     }
@@ -53,9 +53,9 @@ namespace PlantsVsZombies.Zombies.Spiders
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Spiders\Giant\Attack");
-            this.Image.Delay = 40;
+            this.Image.Delay = 80;
             this.Align = new Vector2(38f, 74f);
-            this.Damage = 2;
+            this.Damage = 10;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
     }

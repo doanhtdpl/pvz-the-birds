@@ -42,7 +42,7 @@ namespace PlantsVsZombies.Zombies.Skeletons
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\Tattered\Walk");
             this.Image.Delay = 40;
             this.Align = new Vector2(10f, 87f);
-            this.Velocity = GRandom.RandomInt(5, 15);
+            this.Velocity = 2;
         }
         #endregion
     }
@@ -53,9 +53,9 @@ namespace PlantsVsZombies.Zombies.Skeletons
             : base(zombie)
         {
             this.Image = SpriteBank.GetAnimation(@"Images\Zombies\Skeletons\Tattered\Attack");
-            this.Image.Delay = 40;
+            this.Image.Delay = 60;
             this.Align = new Vector2(20f, 99f);
-            this.Damage = 2;
+            this.Damage = 10;
             this.AttackTimer.Interval = TimeSpan.FromMilliseconds(this.Image.Delay * (this.Image.Frames.Count + 1));
         }
     }

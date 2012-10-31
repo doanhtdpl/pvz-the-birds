@@ -35,6 +35,8 @@ namespace PlantsVsZombies.Plants_Bullets.Grows.GrowButtons
                 return (!this.isCoolDowning && (this.Manager.Manager.GetSunManager.NumberOfSuns >= this.Price));
             }
         }
+
+        public bool LastCanBuy { get; set; }
         #endregion
 
         #region Constructors
@@ -48,6 +50,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows.GrowButtons
             this.visualCoolDown = new Counter.Timer(manager.Game, 0);
             this.visualCoolDown.OnMeet += new Counter.EventOnCounterMeet(this.OnVisualCoolDownTick);
             this.coolDownImage = SpriteBank.GetSprite(@"Images\Controls\CoolDown");
+            this.LastCanBuy = true;
         }
 
         public GrowButton(GrowButton grButton)
@@ -60,6 +63,7 @@ namespace PlantsVsZombies.Plants_Bullets.Grows.GrowButtons
             this.coolDownImage = new Sprite(grButton.coolDownImage);
             this.visualCoolDown.OnMeet += new Counter.EventOnCounterMeet(this.OnVisualCoolDownTick);
             this.CoolDown.OnMeet += new Counter.EventOnCounterMeet(this.OnCoolDownTick);
+            this.LastCanBuy = grButton.LastCanBuy;
         }
         #endregion
 

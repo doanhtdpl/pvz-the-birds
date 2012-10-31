@@ -74,8 +74,8 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
 
         protected override void CalculateCenter()
         {
-            this.center.X = this.position.X + this.CurrentAnimation.Bound.Width / 2;
-            this.center.Y = this.position.Y + this.CurrentAnimation.Bound.Height;
+            this.center.X = this.position.X;
+            this.center.Y = this.position.Y;
             base.CalculateCenter();
         }
 
