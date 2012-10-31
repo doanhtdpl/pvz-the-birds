@@ -106,7 +106,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
             shootTimer.Stop();
         }
 
-        protected void PlantOnState()
+        protected virtual void PlantOnState()
         {
             if (this.plantState == Plant.PlantState.ATTACK)
             {

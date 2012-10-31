@@ -36,7 +36,16 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         {
             if (CurrentAnimation.CurrentFrame == CurrentAnimation.Frames.Count - 1)
             {
-                this.plantState = PlantState.ATTACK;
+                this.plantState = PlantState.DIE;
+            }
+        }
+
+        protected override void PlantOnState()
+        {
+            if (this.plantState == PlantState.DIE)
+            {
+                if (!shootTimer.Enabled)
+                    shootTimer.Start();
             }
         }
 
@@ -50,7 +59,7 @@ namespace PlantsVsZombies.Plants_Bullets.Plant
         protected override void SetBulletPosition()
         {
             // Bullet position
-            Griding.Cell cell = plantManager.GetGriding.IndexOf(this);
+            Griding.Cell cell = plantManager.GetGriding.IndexOf(this.position);
             this.bulletPosition.X = cell.Range.X;
             this.bulletPosition.Y = cell.Range.Y;
         }

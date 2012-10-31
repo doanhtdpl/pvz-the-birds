@@ -84,15 +84,19 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         public override void Initialize()
         {
             isCollided = false;
+            
             base.Initialize();
         }
 
         // Allows the game component to update itself.
         public override void Update(GameTime gameTime)
         {
-            CollisionDetect();
-
             base.Update(gameTime);
+        }
+
+        public override void Draw(GameTime gameTime)
+        {
+            base.Draw(gameTime);
         }
 
         // Detect the collision of bullet with enemy
@@ -119,9 +123,9 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         // Do something when collision happened
         protected virtual void Collided(Zombies.Zombie zombie)
         {
-            this.isCollided = true;
             Zombies.Impacts.Damaging dam = new Zombies.Impacts.Damaging(this.Game, this.damage);
             zombie.AddImpact(dam);
+            BulletEffect();
         }
 
         // Allow it auto remove itself
@@ -129,5 +133,18 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
         {
         }
 
+        // Fire Effect
+        protected void BulletEffect()
+        {
+            if (this.B_Effect != "")
+            {
+                if(effect == null || effect.IsDead)
+                {
+                    List<Sprite> sprites = new List<Sprite>();
+                    sprites.Add(SpriteBank.GetSprite(this.B_Effect));
+                    this.effect = new Effect(this.Game, this.position, 10, sprites, true, 20);
+                }
+            }
+        }
     }
 }

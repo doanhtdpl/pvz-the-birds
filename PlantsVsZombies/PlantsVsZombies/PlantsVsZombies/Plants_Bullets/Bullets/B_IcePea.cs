@@ -32,8 +32,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = @"Images\\Bullets\\B_IcePea";
-            this.B_Effect = @"Images\\Bullets\\B_IcePeaEffect";
+            this.BName = @"Images\Bullets\B_IcePea";
+            this.B_Effect = @"Images\Bullets\B_IcePeaEffect";
 
             this.BSprite = SpriteBank.GetSprite(BName);
             this.damage = 12;

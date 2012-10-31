@@ -32,8 +32,8 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public override void Initialize()
         {
-            this.BName = "Images\\Bullets\\B_Cherry";
-            //this.B_Effect = @"Images\\Plants\\B_MineEffect";
+            this.BName = @"Images\Bullets\B_Cherry";
+            this.B_Effect = "";
             this.damage = 500;
             base.Initialize();
         }

@@ -67,12 +67,12 @@ namespace PlantsVsZombies.Plants_Bullets.Bullets
 
         public void AutoRemove()
         {
-            List<Bullet> bulletsCopy = new List<Bullet>(bullets);
-            foreach (Bullet bullet in bulletsCopy)
+            for (int i = 0; i < bullets.Count; ++i)
             {
-                if (bullet.IsCollided || bullet.Cell == null)
+                if (bullets[i].IsCollided || bullets[i].Cell == null)
                 {
-                    this.bullets.Remove(bullet);
+                    this.bullets.Remove(bullets[i]);
+                    --i;
                 }
             }
         }
